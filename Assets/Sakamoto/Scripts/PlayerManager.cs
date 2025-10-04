@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public class PlayerManager : MonoBehaviour
 {
@@ -40,6 +43,8 @@ public class PlayerManager : MonoBehaviour
     public bool IsEating;
     public bool IsMoving;
 
+    public Filter filter;
+
     public Transform startPosition;
 
     public Transform cameraTransform;
@@ -75,6 +80,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (IsRotating)
         { // 目標方向を計算
+            filter.RedScreen();
             Vector3 direction = (startPosition.position - transform.position).normalized;
 
             //  目標方向に向かって回転
@@ -146,6 +152,7 @@ public class PlayerManager : MonoBehaviour
             if (Vector3.Distance(transform.position, cameraTransform.position) < 0.1f)
             {
                 IsEating = false;
+                StartCoroutine(CallAfterDelay());
             }
         }
 
@@ -249,5 +256,18 @@ public class PlayerManager : MonoBehaviour
     public void Eat()
     {
         IsRotating = true;
+    }
+
+    private IEnumerator CallAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(3f);
+        BackToTitle();
+    }
+
+    private void BackToTitle()
+    {
+        GameManager.Instance.IsGameClear = true;
+        GameManager.Instance.GameReset();
+        SceneManager.LoadScene("TitleScene");
     }
 }

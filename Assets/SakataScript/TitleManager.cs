@@ -13,76 +13,95 @@ public class TitleManager : MonoBehaviour
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider seSlider;
 
-    // y’Ç‰ÁzAudioSourceƒRƒ“ƒ|[ƒlƒ“ƒg‚Ö‚ÌQÆ
+    public Image logoImage;
+    public Sprite titleSprite;
+    public Sprite titleSprite2;
+    public Image titleBackImage;
+    public Sprite titleBackSprite;
+    public Sprite titleBackSprite2;
+
+    // ï¿½yï¿½Ç‰ï¿½ï¿½zAudioSourceï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½Ö‚ÌQï¿½ï¿½
     public AudioSource audioSource;
-    // y’Ç‰ÁzƒJ[ƒ\ƒ‹ˆÚ“®SE
+    // ï¿½yï¿½Ç‰ï¿½ï¿½zï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½Ú“ï¿½SE
     public AudioClip moveSE;
-    // y’Ç‰ÁzŒˆ’èSE
+    // ï¿½yï¿½Ç‰ï¿½ï¿½zï¿½ï¿½ï¿½ï¿½SE
     public AudioClip decideSE;
 
-    public Button[] menuButtons;                    // ƒƒjƒ…[ƒ{ƒ^ƒ“‚ğŠi”[‚·‚é”z—ñ
-    public Image cursorImage;                       // ƒJ[ƒ\ƒ‹‰æ‘œiImageƒRƒ“ƒ|[ƒlƒ“ƒgj
-    public float cursorOffset = 50f;                // ƒJ[ƒ\ƒ‹‚Æƒ{ƒ^ƒ“‚ÌŠÔ‚ÌƒIƒtƒZƒbƒgi‹——£j
-    private int currentSelectedButtonIndex = 0;     // Œ»İ‘I‘ğ’†‚Ìƒ{ƒ^ƒ“‚ÌƒCƒ“ƒfƒbƒNƒX
+    public Button[] menuButtons;                    // ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½[ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½
+    public Image cursorImage;                       // ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½æ‘œï¿½iImageï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½j
+    public float cursorOffset = 50f;                // ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½Æƒ{ï¿½^ï¿½ï¿½ï¿½ÌŠÔ‚ÌƒIï¿½tï¿½Zï¿½bï¿½gï¿½iï¿½ï¿½ï¿½ï¿½ï¿½j
+    private int currentSelectedButtonIndex = 0;     // ï¿½ï¿½ï¿½İ‘Iï¿½ğ’†‚Ìƒ{ï¿½^ï¿½ï¿½ï¿½ÌƒCï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½X
 
-    // AudioMixer‚ÌExposed Parameter–¼‚Æˆê’v‚³‚¹‚é
+    // AudioMixerï¿½ï¿½Exposed Parameterï¿½ï¿½ï¿½Æˆï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private const string BGM_VOLUME_PARAM = "BGMVolume";
     private const string SE_VOLUME_PARAM = "SEVolume";
 
     void Start()
     {
-        //// ƒJ[ƒ\ƒ‹‰æ‘œ‚ğÅ‰‚Í”ñ•\¦‚É‚·‚é
+        //// ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½Åï¿½ï¿½Í”ï¿½\ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½
         //if (cursorImage != null)
         //{
         //    cursorImage.gameObject.SetActive(false);
         //}
 
-        // ‰Šú‘I‘ğƒ{ƒ^ƒ“‚ğİ’è‚µAƒJ[ƒ\ƒ‹‚ğ”z’u
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½İ’è‚µï¿½Aï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ï¿½zï¿½u
         if (menuButtons.Length > 0)
         {
             SelectButton(0);
         }
+
+
+        if (GameManager.Instance.IsGameClear)
+        {
+            logoImage.sprite = titleSprite2;
+            titleBackImage.sprite = titleBackSprite2;
+        }
+        else
+        {
+            logoImage.sprite = titleSprite;
+            titleBackImage.sprite = titleBackSprite;
+        }
     }
 
-    // y’Ç‰ÁzŒø‰Ê‰¹‚ğÄ¶‚·‚éƒwƒ‹ƒp[ŠÖ”
+    // ï¿½yï¿½Ç‰ï¿½ï¿½zï¿½ï¿½ï¿½Ê‰ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½pï¿½[ï¿½Öï¿½
     private void PlaySound(AudioClip clip)
     {
         if (audioSource != null && clip != null)
         {
-            audioSource.PlayOneShot(clip); // Œ»İÄ¶’†‚Ì‰¹‚ª‚ ‚Á‚Ä‚àAd‚Ë‚ÄÄ¶‚·‚é
+            audioSource.PlayOneShot(clip); // ï¿½ï¿½ï¿½İÄï¿½ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Aï¿½dï¿½Ë‚ÄÄï¿½ï¿½ï¿½ï¿½ï¿½
         }
     }
 
     void Update()
     {
-        // ãƒL[‚ª‰Ÿ‚³‚ê‚½‚ç
+        // ï¿½ï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             currentSelectedButtonIndex--;
             if (currentSelectedButtonIndex < 0)
             {
-                currentSelectedButtonIndex = menuButtons.Length - 1; // ˆê”Ô‰º‚Ìƒ{ƒ^ƒ“‚Öƒ‹[ƒv
+                currentSelectedButtonIndex = menuButtons.Length - 1; // ï¿½ï¿½Ô‰ï¿½ï¿½Ìƒ{ï¿½^ï¿½ï¿½ï¿½Öƒï¿½ï¿½[ï¿½v
             }
             SelectButton(currentSelectedButtonIndex);
             PlaySound(moveSE);
         }
 
-        // ‰ºƒL[‚ª‰Ÿ‚³‚ê‚½‚ç
+        // ï¿½ï¿½ï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             currentSelectedButtonIndex++;
             if (currentSelectedButtonIndex >= menuButtons.Length)
             {
-                currentSelectedButtonIndex = 0; // ˆê”Ôã‚Ìƒ{ƒ^ƒ“‚Öƒ‹[ƒv
+                currentSelectedButtonIndex = 0; // ï¿½ï¿½Ôï¿½Ìƒ{ï¿½^ï¿½ï¿½ï¿½Öƒï¿½ï¿½[ï¿½v
             }
             SelectButton(currentSelectedButtonIndex);
             PlaySound(moveSE);
         }
 
-        // SpaceƒL[‚ª‰Ÿ‚³‚ê‚½‚ç
+        // Spaceï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // Œ»İ‘I‘ğ’†‚Ìƒ{ƒ^ƒ“‚ÌOnClickƒCƒxƒ“ƒg‚ğÀs
+            // ï¿½ï¿½ï¿½İ‘Iï¿½ğ’†‚Ìƒ{ï¿½^ï¿½ï¿½ï¿½ï¿½OnClickï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½s
             if (menuButtons.Length > currentSelectedButtonIndex)
             {
                 menuButtons[currentSelectedButtonIndex].onClick.Invoke();
@@ -91,43 +110,43 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    // ƒ{ƒ^ƒ“‚ğ‘I‘ğ‚µAƒJ[ƒ\ƒ‹‚ğˆÚ“®‚³‚¹‚éŠÖ”
+    // ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
     void SelectButton(int index)
     {
         if (index < 0 || index >= menuButtons.Length) return;
 
-        // ‚Ü‚¸‘S‚Ä‚Ìƒ{ƒ^ƒ“‚ÌƒnƒCƒ‰ƒCƒg‚ğ‰ğœi”O‚Ì‚½‚ßj
+        // ï¿½Ü‚ï¿½ï¿½Sï¿½Ä‚Ìƒ{ï¿½^ï¿½ï¿½ï¿½Ìƒnï¿½Cï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½Oï¿½Ì‚ï¿½ï¿½ßj
         // EventSystem.current.SetSelectedGameObject(null);
 
-        // w’è‚³‚ê‚½ƒ{ƒ^ƒ“‚ğ‘I‘ğó‘Ô‚É‚·‚é
+        // ï¿½wï¿½è‚³ï¿½ê‚½ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½Ô‚É‚ï¿½ï¿½ï¿½
         EventSystem.current.SetSelectedGameObject(menuButtons[index].gameObject);
-        currentSelectedButtonIndex = index; // Œ»İ‚Ì‘I‘ğƒCƒ“ƒfƒbƒNƒX‚ğXV
+        currentSelectedButtonIndex = index; // ï¿½ï¿½ï¿½İ‚Ì‘Iï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½Xï¿½ï¿½ï¿½Xï¿½V
 
-        // ƒJ[ƒ\ƒ‹‰æ‘œ‚ğ—LŒø‚É‚µAˆÊ’u‚ğ’²®
+        // ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½æ‘œï¿½ï¿½Lï¿½ï¿½ï¿½É‚ï¿½ï¿½Aï¿½Ê’uï¿½ğ’²ï¿½
         if (cursorImage != null)
         {
             cursorImage.gameObject.SetActive(true);
-            // ‘I‘ğ‚³‚ê‚½ƒ{ƒ^ƒ“‚ÌRectTransform‚ğæ“¾
+            // ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½RectTransformï¿½ï¿½ï¿½æ“¾
             RectTransform buttonRect = menuButtons[index].GetComponent<RectTransform>();
 
-            // ƒJ[ƒ\ƒ‹‚ÌˆÊ’u‚ğƒ{ƒ^ƒ“‚Ì¶‘¤‚Éİ’è
-            // ƒ{ƒ^ƒ“‚Ì¶’[‚©‚ç¶‚ÉcursorOffset•ªˆÚ“®
+            // ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½Éİ’ï¿½
+            // ï¿½{ï¿½^ï¿½ï¿½ï¿½Ìï¿½ï¿½[ï¿½ï¿½ï¿½ç¶ï¿½ï¿½cursorOffsetï¿½ï¿½ï¿½Ú“ï¿½
             float xPos = buttonRect.position.x - buttonRect.rect.width / 2f - cursorOffset;
-            float yPos = buttonRect.position.y; // ƒ{ƒ^ƒ“‚Æ“¯‚¶‚‚³
+            float yPos = buttonRect.position.y; // ï¿½{ï¿½^ï¿½ï¿½ï¿½Æ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
             cursorImage.rectTransform.position = new Vector3(xPos, yPos, 0);
         }
     }
 
-    // ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ªƒ{ƒ^ƒ“‚Éæ‚Á‚½‚ÉŒÄ‚Î‚ê‚éƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰
-    // ‚±‚ê‚É‚æ‚èAƒ}ƒEƒX‘€ì‚Å‚àƒJ[ƒ\ƒ‹‰æ‘œ‚ªˆÚ“®‚·‚é‚æ‚¤‚É‚È‚é
+    // ï¿½}ï¿½Eï¿½Xï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉŒÄ‚Î‚ï¿½ï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½É‚ï¿½ï¿½Aï¿½}ï¿½Eï¿½Xï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½É‚È‚ï¿½
     public void OnPointerEnterButton(Button hoveredButton)
     {
         for (int i = 0; i < menuButtons.Length; i++)
         {
             if (menuButtons[i] == hoveredButton)
             {
-                SelectButton(i); // ƒzƒo[‚³‚ê‚½ƒ{ƒ^ƒ“‚ğ‘I‘ğó‘Ô‚É‚·‚é
+                SelectButton(i); // ï¿½zï¿½oï¿½[ï¿½ï¿½ï¿½ê‚½ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½Ô‚É‚ï¿½ï¿½ï¿½
                 break;
             }
         }
@@ -136,77 +155,77 @@ public class TitleManager : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("ƒQ[ƒ€ƒXƒ^[ƒgI");
-        // (ƒfƒoƒbƒOFƒIƒvƒVƒ‡ƒ“İ’èƒV[ƒ“‚Ö‘JˆÚ)
-        SceneManager.LoadScene("SakataOption");
+        Debug.Log("ï¿½Qï¿½[ï¿½ï¿½ï¿½Xï¿½^ï¿½[ï¿½gï¿½I");
+        // (ï¿½fï¿½oï¿½bï¿½Oï¿½Fï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½Vï¿½[ï¿½ï¿½ï¿½Ö‘Jï¿½ï¿½)
+        SceneManager.LoadScene("Sakamoto");
     }
 
     public void OpenOption()
     {
-        // ƒIƒvƒVƒ‡ƒ“‰æ–Ê‚ğŠJ‚­
+        // ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê‚ï¿½ï¿½Jï¿½ï¿½
         optionPanel.SetActive(true);
 
-        // XVˆ—‚ğ~‚ß‚é
+        // ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½ß‚ï¿½
         this.enabled = false;
 
-        // ƒ^ƒCƒgƒ‹UI‚ğ”ñ•\¦
+        // ï¿½^ï¿½Cï¿½gï¿½ï¿½UIï¿½ï¿½ï¿½\ï¿½ï¿½
         titleUis.SetActive(false);
     }
 
     public void CloseOption()
     {
-        // ‰æ–Ê‚ğ•Â‚¶‚é
+        // ï¿½ï¿½Ê‚ï¿½Â‚ï¿½ï¿½ï¿½
         optionPanel.SetActive(false);
 
-        // XVˆ—‚ğŠJn
+        // ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½n
         this.enabled = true;
 
-        // ƒ^ƒCƒgƒ‹UI‚ğ•\¦
+        // ï¿½^ï¿½Cï¿½gï¿½ï¿½UIï¿½ï¿½\ï¿½ï¿½
         titleUis.SetActive(true);
 
-        //ƒ{ƒ^ƒ“ˆÊ’u‚ğƒŠƒZƒbƒg
+        //ï¿½{ï¿½^ï¿½ï¿½ï¿½Ê’uï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
         //RectTransform buttonRect = menuButtons[0].GetComponent<RectTransform>();
         //float xPos = buttonRect.position.x - buttonRect.rect.width / 2f - cursorOffset;
-        //float yPos = buttonRect.position.y; // ƒ{ƒ^ƒ“‚Æ“¯‚¶‚‚³
+        //float yPos = buttonRect.position.y; // ï¿½{ï¿½^ï¿½ï¿½ï¿½Æ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         //cursorImage.rectTransform.position = new Vector3(xPos, yPos, 0);
     }
 
     public void SetBGMVolume(float volume)
     {
-        // volume‚ğƒfƒVƒxƒ‹’l‚É•ÏŠ·
+        // volumeï¿½ï¿½ï¿½fï¿½Vï¿½xï¿½ï¿½ï¿½lï¿½É•ÏŠï¿½
         float decibel = Mathf.Log10(volume) * 20f;
 
-        // 0‚Ìê‡
+        // 0ï¿½Ìê‡
         if (volume == 0f)
         {
-            // Å¬’l‚ğİ’è
+            // ï¿½Åï¿½ï¿½lï¿½ï¿½İ’ï¿½
             decibel = -80f;
         }
 
-        // AudioMixer‚É’l‚ğİ’è
+        // AudioMixerï¿½É’lï¿½ï¿½İ’ï¿½
         audioMixer.SetFloat(BGM_VOLUME_PARAM, decibel);
     }
 
     public void SetSEVolume(float volume)
     {
-        // volume‚ğƒfƒVƒxƒ‹’l‚É•ÏŠ·
+        // volumeï¿½ï¿½ï¿½fï¿½Vï¿½xï¿½ï¿½ï¿½lï¿½É•ÏŠï¿½
         float decibel = Mathf.Log10(volume) * 20f;
 
-        // 0‚Ìê‡
+        // 0ï¿½Ìê‡
         if (volume == 0f)
         {
-            // Å¬’l‚ğİ’è
+            // ï¿½Åï¿½ï¿½lï¿½ï¿½İ’ï¿½
             decibel = -80f;
         }
 
-        // AudioMixer‚É’l‚ğİ’è
+        // AudioMixerï¿½É’lï¿½ï¿½İ’ï¿½
         audioMixer.SetFloat(SE_VOLUME_PARAM, decibel);
     }
 
     public void ExitGame()
     {
-        // UnityƒGƒfƒBƒ^[‚Å‚Ì“®ì
-        UnityEditor.EditorApplication.isPlaying = false;
-        Application.Quit();
+        // Unityï¿½Gï¿½fï¿½Bï¿½^ï¿½[ï¿½Å‚Ì“ï¿½ï¿½ï¿½
+        /*  UnityEditor.EditorApplication.isPlaying = false;
+         Application.Quit(); */
     }
 }
