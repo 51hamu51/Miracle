@@ -40,6 +40,7 @@ public class WASD : MonoBehaviour
     
     // FixedUpdate is called at a fixed interval and is used for physics calculations.
     void FixedUpdate() {
-        _rigidbody.linearVelocity = _velocity.normalized * _speed;
+        var movement = _velocity.normalized * _speed;
+        _rigidbody.linearVelocity = new Vector3(movement.x, _rigidbody.linearVelocity.y, movement.z);
     }
 }
