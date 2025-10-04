@@ -1373,6 +1373,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8098799544065131785, guid: 225935d665075a54485a8c260a95a6fd, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8876495713657499207, guid: 225935d665075a54485a8c260a95a6fd, type: 3}
       propertyPath: m_Value
       value: -0
@@ -2269,6 +2273,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1263349896}
     m_Modifications:
+    - target: {fileID: 1647932148574138177, guid: 5151c5946e186794ebbb2ad29416c949, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2498068386212027054, guid: 5151c5946e186794ebbb2ad29416c949, type: 3}
       propertyPath: m_Name
       value: SelectArrow
