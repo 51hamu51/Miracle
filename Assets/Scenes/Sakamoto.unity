@@ -3059,8 +3059,6 @@ MonoBehaviour:
   audioMixer: {fileID: 0}
   optionPanel: {fileID: 0}
   optionOpenButton: {fileID: 0}
-  bgmSlider: {fileID: 0}
-  seSlider: {fileID: 0}
 --- !u!1 &1416499313
 GameObject:
   m_ObjectHideFlags: 0
@@ -6121,7 +6119,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8146057942111398442, guid: 82f3733c12e7dff478644380cfa85531, type: 3}
+  - {fileID: 2100000, guid: 47c3a879618bdaa4fbfa5bb1394d907d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6300,6 +6298,8 @@ MonoBehaviour:
   recoverAmount: 100
   drainTime: 0.2
   resultCanvasManager: {fileID: 438503951}
+  IsDead: 0
+  IsClear: 0
   IsRotating: 0
   IsRotating2: 0
   IsEating: 0
