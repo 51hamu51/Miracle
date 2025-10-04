@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
@@ -12,6 +13,13 @@ public class TitleManager : MonoBehaviour
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider seSlider;
 
+    // 【追加】AudioSourceコンポーネントへの参照
+    public AudioSource audioSource;
+    // 【追加】カーソル移動SE
+    public AudioClip moveSE;
+    // 【追加】決定SE
+    public AudioClip decideSE;
+
     public Button[] menuButtons;                    // メニューボタンを格納する配列
     public Image cursorImage;                       // カーソル画像（Imageコンポーネント）
     public float cursorOffset = 50f;                // カーソルとボタンの間のオフセット（距離）
@@ -23,16 +31,25 @@ public class TitleManager : MonoBehaviour
 
     void Start()
     {
-        // カーソル画像を最初は非表示にする
-        if (cursorImage != null)
-        {
-            cursorImage.gameObject.SetActive(false);
-        }
+        //// カーソル画像を最初は非表示にする
+        //if (cursorImage != null)
+        //{
+        //    cursorImage.gameObject.SetActive(false);
+        //}
 
         // 初期選択ボタンを設定し、カーソルを配置
         if (menuButtons.Length > 0)
         {
             SelectButton(0);
+        }
+    }
+
+    // 【追加】効果音を再生するヘルパー関数
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip); // 現在再生中の音があっても、重ねて再生する
         }
     }
 
@@ -47,6 +64,7 @@ public class TitleManager : MonoBehaviour
                 currentSelectedButtonIndex = menuButtons.Length - 1; // 一番下のボタンへループ
             }
             SelectButton(currentSelectedButtonIndex);
+            PlaySound(moveSE);
         }
 
         // 下キーが押されたら
@@ -58,6 +76,7 @@ public class TitleManager : MonoBehaviour
                 currentSelectedButtonIndex = 0; // 一番上のボタンへループ
             }
             SelectButton(currentSelectedButtonIndex);
+            PlaySound(moveSE);
         }
 
         // Spaceキーが押されたら
@@ -68,6 +87,7 @@ public class TitleManager : MonoBehaviour
             {
                 menuButtons[currentSelectedButtonIndex].onClick.Invoke();
             }
+            PlaySound(decideSE);
         }
     }
 
@@ -126,6 +146,9 @@ public class TitleManager : MonoBehaviour
         // オプション画面を開く
         optionPanel.SetActive(true);
 
+        // 更新処理を止める
+        this.enabled = false;
+
         // タイトルUIを非表示
         titleUis.SetActive(false);
     }
@@ -135,8 +158,17 @@ public class TitleManager : MonoBehaviour
         // 画面を閉じる
         optionPanel.SetActive(false);
 
+        // 更新処理を開始
+        this.enabled = true;
+
         // タイトルUIを表示
         titleUis.SetActive(true);
+
+        //ボタン位置をリセット
+        //RectTransform buttonRect = menuButtons[0].GetComponent<RectTransform>();
+        //float xPos = buttonRect.position.x - buttonRect.rect.width / 2f - cursorOffset;
+        //float yPos = buttonRect.position.y; // ボタンと同じ高さ
+        //cursorImage.rectTransform.position = new Vector3(xPos, yPos, 0);
     }
 
     public void SetBGMVolume(float volume)

@@ -937,6 +937,37 @@ MonoBehaviour:
   clearPanel: {fileID: 1085740935}
   deadPanel: {fileID: 1204633009}
   playerManager: {fileID: 7587833194951475453}
+--- !u!1 &464102177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 464102178}
+  m_Layer: 0
+  m_Name: EatPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &464102178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464102177}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1, y: 3.7, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &525088919
 GameObject:
   m_ObjectHideFlags: 0
@@ -3028,8 +3059,6 @@ MonoBehaviour:
   audioMixer: {fileID: 0}
   optionPanel: {fileID: 0}
   optionOpenButton: {fileID: 0}
-  bgmSlider: {fileID: 0}
-  seSlider: {fileID: 0}
 --- !u!1 &1416499313
 GameObject:
   m_ObjectHideFlags: 0
@@ -5986,7 +6015,7 @@ GameObject:
   - component: {fileID: 7587833194951475451}
   - component: {fileID: 7587833194951475450}
   m_Layer: 0
-  m_Name: suraimu
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6090,7 +6119,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8146057942111398442, guid: 82f3733c12e7dff478644380cfa85531, type: 3}
+  - {fileID: 2100000, guid: 47c3a879618bdaa4fbfa5bb1394d907d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6269,12 +6298,14 @@ MonoBehaviour:
   recoverAmount: 100
   drainTime: 0.2
   resultCanvasManager: {fileID: 438503951}
+  IsDead: 0
+  IsClear: 0
   IsRotating: 0
   IsRotating2: 0
   IsEating: 0
   IsMoving: 0
   startPosition: {fileID: 1416499314}
-  cameraTransform: {fileID: 330585546}
+  cameraTransform: {fileID: 464102178}
   eatMoveSpeed: 3
   bossBonus: 3
   rotateSpeed: 90
@@ -6917,3 +6948,4 @@ SceneRoots:
   - {fileID: 7587833194951475449}
   - {fileID: 1416499314}
   - {fileID: 130072002}
+  - {fileID: 464102178}
