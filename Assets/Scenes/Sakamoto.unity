@@ -6802,17 +6802,14 @@ MonoBehaviour:
   IsRotating2: 0
   IsEating: 0
   IsMoving: 0
-
   IsFading: 0
-
   IsRed: 0
-
   filter: {fileID: 1787700159}
   startPosition: {fileID: 1416499314}
   cameraTransform: {fileID: 464102178}
   eatMoveSpeed: 3
   bossBonus: 3
-  gameEnd: {fileID: 863762752}
+  gameEnd: {fileID: 0}
   rotateSpeed: 90
 --- !u!4 &7730576093311156051
 Transform:

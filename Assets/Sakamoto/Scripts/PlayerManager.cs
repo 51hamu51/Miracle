@@ -87,15 +87,15 @@ public class PlayerManager : MonoBehaviour
         IsFading = false;
 
         // ↓これは使える、分からん
-         gameEnd.StartFadeIn();
+        // gameEnd.StartFadeIn();
 
         IsRed = false;
 
     }
 
     void Update()
-    { 
-        
+    {
+
 
         if (IsRotating)
 
@@ -122,12 +122,14 @@ public class PlayerManager : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(direction);
                 IsRotating = false;
                 IsMoving = true; // 回転終わったら移動開始
+                Debug.Log("FinishRotate");
             }
         }
 
 
         if (IsMoving && startPosition != null)
         {
+            Debug.Log("Move");
             Vector3 direction = (startPosition.position - transform.position).normalized;
             // 目標方向に進む
             transform.position += direction * eatMoveSpeed * Time.unscaledDeltaTime;
@@ -283,7 +285,7 @@ public class PlayerManager : MonoBehaviour
     {
         IsRotating = true;
         // ↓これは使えない、分からん
-        gameEnd.StartFadeIn();
+        // gameEnd.StartFadeIn();
     }
 
     private IEnumerator CallAfterDelay()
