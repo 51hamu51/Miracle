@@ -20,16 +20,21 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        Debug.Log(_moveDirection);
         _playerDistance = _player.transform.position - transform.position;
 
         if (_playerDistance.magnitude < 2.0f)
         {
             _isScared = true;
         }
+        else if(_playerDistance.magnitude > 5.0f)
+        {
+            _isScared = false;
+        }
 
         if (_isScared)
         {
-            _moveDirection = -_playerDistance.normalized * 2.0f;
+            _moveDirection = -_playerDistance.normalized;
             _moveDirection.y = 0.0f;
         }
         else
@@ -38,5 +43,13 @@ public class EnemyController : MonoBehaviour
         }
         transform.LookAt(_player.transform);
         transform.position += _moveDirection * _moveSpeed;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Player")
+        {
+            Destroy(gameObject);
+        }
     }
 }

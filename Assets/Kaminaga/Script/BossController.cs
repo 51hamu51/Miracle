@@ -41,13 +41,10 @@ public class BossController : MonoBehaviour
             _counter = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        
+        if (Input.GetKeyDown(KeyCode.K))
         {
             _currentState = BossState.Move;
-        }
-        if (_playerDistance.magnitude < 2.0f)
-        {
-            _currentState = BossState.Attack;
         }
 
         switch (_currentState)
@@ -65,10 +62,15 @@ public class BossController : MonoBehaviour
                 break;
             case BossState.Attack:
                 _moveDirection = Vector3.zero;
-
-                if (_counter == 0)
+                _counter++;
+                if (_counter == 25)
                 {
+                    Debug.DrawRay(transform.position, transform.forward * 5.0f, Color.red, 1.0f);
                     Debug.Log("UŒ‚!");
+                }
+                if(_playerDistance.magnitude > 3.0f)
+                {
+                    _currentState = BossState.Move;
                 }
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
@@ -80,5 +82,12 @@ public class BossController : MonoBehaviour
                 break;
         }
         transform.position += _moveDirection * _moveSpeed;
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Player")
+        {
+            Destroy(gameObject);
+        }
     }
 }
