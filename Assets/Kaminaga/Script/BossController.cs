@@ -18,7 +18,7 @@ public class BossController : MonoBehaviour
     private BossState _currentState;
     public BossState CurrentState { get { return _currentState; } }
     private int _counter;
-    private bool _isAttack;
+    public bool _isAttack;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,15 +37,15 @@ public class BossController : MonoBehaviour
     {
         _playerDistance = _player.transform.position - transform.position;
         transform.LookAt(_player.transform);
-        Debug.Log("Œü‚©‚Á‚Ä‚­‚é“G‚Ìó‘Ô:" + _currentState.ToString());
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Gï¿½Ìï¿½ï¿½:" + _currentState.ToString());
 
-        
+
         if (Input.GetKeyDown(KeyCode.K))
         {
             _currentState = BossState.Move;
         }
 
-        
+
 
         switch (_currentState)
         {
@@ -56,12 +56,12 @@ public class BossController : MonoBehaviour
                 _counter++;
                 _myMaterial.color = Color.green;
                 _moveDirection = _playerDistance.normalized;
-                
+
                 if (_counter == 100)
                 {
                     _isAttack = true;
                     _counter = 0;
-                    Debug.Log("UŒ‚!");
+                    Debug.Log("ï¿½Uï¿½ï¿½!");
                     _currentState = BossState.Attack;
                 }
                 break;
@@ -83,11 +83,9 @@ public class BossController : MonoBehaviour
         transform.position += _moveDirection * _moveSpeed;
         GetComponent<Renderer>().material = _myMaterial;
     }
-    void OnCollisionEnter(Collision collision)
+
+    public void BossDead()
     {
-        if (collision.gameObject.name == "Player")
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 }
