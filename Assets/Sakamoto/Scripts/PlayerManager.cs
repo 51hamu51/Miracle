@@ -26,10 +26,10 @@ public class PlayerManager : MonoBehaviour
 
     public ResultCanvasManager resultCanvasManager;
 
-    private bool IsDead;
-    private bool IsClear;
+    [SerializeField] private bool IsDead;
+    [SerializeField] private bool IsClear;
 
-    public bool CanMove => !IsDead && !IsRotating && !IsRotating2 && !IsEating && !IsMoving;
+    public bool CanMove => !IsDead && !IsRotating && !IsRotating2 && !IsEating && !IsMoving && !IsClear;
 
     private Vector3 initialScale; // 初期サイズを保持
     private BossController bossController;
