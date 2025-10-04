@@ -18,6 +18,7 @@ public class BossController : MonoBehaviour
     private BossState _currentState;
     public BossState CurrentState { get { return _currentState; } }
     private int _counter;
+    private bool _isAttack;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,8 +27,9 @@ public class BossController : MonoBehaviour
         _playerDistance = Vector3.zero;
         _moveDirection = Vector3.zero;
         _moveSpeed = 0.01f;
-        _currentState = BossState.Idle;
+        _currentState = BossState.Move;
         _counter = 0;
+        _isAttack = false;
     }
 
     // Update is called once per frame
@@ -35,11 +37,7 @@ public class BossController : MonoBehaviour
     {
         _playerDistance = _player.transform.position - transform.position;
         transform.LookAt(_player.transform);
-        Debug.Log(_currentState);
-        if (_counter == 50)
-        {
-            _counter = 0;
-        }
+        Debug.Log("å¸Ç©Ç¡ÇƒÇ≠ÇÈìGÇÃèÛë‘:" + _currentState.ToString());
 
         
         if (Input.GetKeyDown(KeyCode.K))
@@ -47,41 +45,43 @@ public class BossController : MonoBehaviour
             _currentState = BossState.Move;
         }
 
+        
+
         switch (_currentState)
         {
             case BossState.Idle:
                 _moveDirection = Vector3.zero;
                 break;
             case BossState.Move:
-                _myMaterial.color = Color.red;
+                _counter++;
+                _myMaterial.color = Color.green;
                 _moveDirection = _playerDistance.normalized;
-                if (_playerDistance.magnitude < 2.0f)
+                
+                if (_counter == 100)
                 {
+                    _isAttack = true;
+                    _counter = 0;
+                    Debug.Log("çUåÇ!");
                     _currentState = BossState.Attack;
                 }
                 break;
             case BossState.Attack:
-                _moveDirection = Vector3.zero;
+                _myMaterial.color = Color.red;
                 _counter++;
-                if (_counter == 25)
+                if (_counter == 10)
                 {
-                    Debug.DrawRay(transform.position, transform.forward * 5.0f, Color.red, 1.0f);
-                    Debug.Log("çUåÇ!");
-                }
-                if(_playerDistance.magnitude > 3.0f)
-                {
+                    _isAttack = false;
+                    _counter = 0;
                     _currentState = BossState.Move;
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    _currentState = BossState.Dead;
                 }
                 break;
             case BossState.Dead:
                 Destroy(gameObject);
                 break;
         }
+        _moveDirection.y = 0.0f;
         transform.position += _moveDirection * _moveSpeed;
+        GetComponent<Renderer>().material = _myMaterial;
     }
     void OnCollisionEnter(Collision collision)
     {
