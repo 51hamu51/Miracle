@@ -51,4 +51,11 @@ public class ResultCanvasManager : MonoBehaviour
     {
         SceneManager.LoadScene("Sakamoto");
     }
+
+    public void BackTitle()
+    {
+        GameManager.Instance.GameReset();
+        GameManager.Instance.IsGameClear = false;
+        SceneManager.LoadScene("TitleScene");
+    }
 }
