@@ -156,7 +156,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -4.7436523, y: -11.601196}
-  m_SizeDelta: {x: 114.512695, y: 38.397705}
+  m_SizeDelta: {x: 70, y: 38.397705}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &20585186
 MonoBehaviour:
@@ -871,7 +871,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Stage:1
+  m_text: "\u30B9\u30C6\u30FC\u30B8:1"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9124261233fe4ab4497f67114c496ed5, type: 2}
   m_sharedMaterial: {fileID: -8886054367858064759, guid: 9124261233fe4ab4497f67114c496ed5, type: 2}
@@ -1966,8 +1966,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 2.4999988}
+  m_SizeDelta: {x: 0, y: -5.0000024}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1100754935
 MonoBehaviour:
@@ -1989,7 +1989,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OPTION
+  m_text: "\u8A2D\u5B9A"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9124261233fe4ab4497f67114c496ed5, type: 2}
   m_sharedMaterial: {fileID: -8886054367858064759, guid: 9124261233fe4ab4497f67114c496ed5, type: 2}
