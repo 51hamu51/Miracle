@@ -68,7 +68,7 @@ public class BossController : MonoBehaviour
             case BossState.Attack:
                 _myMaterial.color = Color.red;
                 _counter++;
-                if (_counter == 10)
+                if (_counter == 50)
                 {
                     _isAttack = false;
                     _counter = 0;
