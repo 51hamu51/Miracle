@@ -1,18 +1,12 @@
 using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
-public class GameManager : MonoBehaviour
+public class OptionManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-
-    public int clearStageNum;
-
-
-    [SerializeField] private ResultCanvasManager resultCanvasManager;  
+    // 設定項目
     [SerializeField] private AudioMixer audioMixer;
-    [SerializeField] private GameObject optionPanel;
+    [SerializeField] private GameObject optionPanel;    
     [SerializeField] private GameObject optionOpenButton;
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider seSlider;
@@ -21,26 +15,9 @@ public class GameManager : MonoBehaviour
     private const string BGM_VOLUME_PARAM = "BGMVolume";
     private const string SE_VOLUME_PARAM = "SEVolume";
 
-    private void Awake()
+    private void Start()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        GameReset();
-    }
-
-    public void StageClear()
-    {
-        clearStageNum++;
-    }
-
-    public void GameReset()
-    {
-        clearStageNum = 0;
+        
     }
 
     public void SetBGMVolume(float volume)
@@ -49,7 +26,7 @@ public class GameManager : MonoBehaviour
         float decibel = Mathf.Log10(volume) * 20f;
 
         // 0の場合
-        if (volume == 0f)
+        if(volume == 0f)
         {
             // 最小値を設定
             decibel = -80f;
@@ -97,12 +74,5 @@ public class GameManager : MonoBehaviour
 
         // ゲームを再開
         Time.timeScale = 1f;
-    }
-
-    public void ChangeTitle()
-    {
-        Debug.Log("ゲームスタート！");
-        // タイトルへ戻る
-        SceneManager.LoadScene("TitleScene");
     }
 }
