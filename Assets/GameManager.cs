@@ -17,13 +17,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject optionOpenButton;
-    [SerializeField] private Slider bgmSlider;
-    [SerializeField] private Slider seSlider;
+
 
     // AudioMixer��Exposed Parameter���ƈ�v������
     private const string BGM_VOLUME_PARAM = "BGMVolume";
     private const string SE_VOLUME_PARAM = "SEVolume";
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -45,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         clearStageNum = 0;
     }
+
 
     public void SetBGMVolume(float volume)
     {

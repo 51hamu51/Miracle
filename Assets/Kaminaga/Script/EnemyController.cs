@@ -5,6 +5,7 @@ public class EnemyController : MonoBehaviour
 {
     private GameObject _player;
     private Vector3 _playerDistance;
+    private Vector3 _lookPlayer;
     private Vector3 _moveDirection;
     private float _moveSpeed;
     private bool _isScared;
@@ -13,6 +14,7 @@ public class EnemyController : MonoBehaviour
     {
         _player = GameObject.Find("Player");   
         _playerDistance = Vector3.zero;
+        _lookPlayer = Vector3.zero;
         _moveDirection = Vector3.zero;
         _moveSpeed = 0.01f;
         _isScared = false;
@@ -44,7 +46,9 @@ public class EnemyController : MonoBehaviour
         {
             _moveDirection = Vector3.zero;
         }
-        transform.LookAt(_player.transform);
+        _lookPlayer = _playerDistance.normalized;
+        _lookPlayer.y = 0.0f;
+        transform.rotation = Quaternion.LookRotation(_lookPlayer);
         transform.position += _moveDirection * _moveSpeed;
     }
 
