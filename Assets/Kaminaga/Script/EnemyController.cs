@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class EnemyController : MonoBehaviour
 {
     private GameObject _player;
@@ -10,7 +11,7 @@ public class EnemyController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _player = GameObject.Find("Player");
+        _player = GameObject.Find("Player");   
         _playerDistance = Vector3.zero;
         _moveDirection = Vector3.zero;
         _moveSpeed = 0.01f;
@@ -20,6 +21,8 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        
+        
         Debug.Log(_moveDirection);
         _playerDistance = _player.transform.position - transform.position;
 
@@ -49,4 +52,5 @@ public class EnemyController : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
 }

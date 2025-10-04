@@ -3,6 +3,8 @@ using UnityEngine;
 public class EnemyGenerator : MonoBehaviour
 {
     private GameObject _enemyPrefab;
+    [SerializeField] private GameObject _spawnPositionLef;
+    [SerializeField] private GameObject _spawnPositionRig;
     private Vector3 _spawnPosition;
     void Start()
     {
@@ -12,10 +14,17 @@ public class EnemyGenerator : MonoBehaviour
 
     void FixedUpdate()
     {
-        _spawnPosition = new Vector3(Random.Range(-5.0f, 5.0f), 0, Random.Range(-5.0f, 5.0f));
-        if (Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.O))
         {
-            Instantiate(_enemyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            _spawnPosition = _spawnPositionLef.transform.position;
+        }
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            _spawnPosition = _spawnPositionRig.transform.position;
+        }
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            Instantiate(_enemyPrefab, _spawnPosition, Quaternion.identity);
         }
     }
 }
