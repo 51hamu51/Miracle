@@ -1,4 +1,8 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerManager : MonoBehaviour
 {
@@ -39,6 +43,9 @@ public class PlayerManager : MonoBehaviour
     public bool IsRotating2;
     public bool IsEating;
     public bool IsMoving;
+    public bool IsFading;
+
+    public Filter filter;
 
     public Transform startPosition;
 
@@ -50,6 +57,9 @@ public class PlayerManager : MonoBehaviour
     /// ボスを倒したときの回復ボーナス(倍率)
     /// </summary>
     [SerializeField] private float bossBonus;
+
+
+    [SerializeField] private GameEndEffect gameEnd;
 
     // 目標の角度
     private Quaternion targetRotation;
@@ -69,12 +79,20 @@ public class PlayerManager : MonoBehaviour
         IsRotating2 = false;
         IsEating = false;
         IsMoving = false;
+        IsFading = false;
+
+        // ↓これは使える、分からん
+         gameEnd.StartFadeIn();
     }
 
     void Update()
-    {
+    { 
+        
+
         if (IsRotating)
-        { // 目標方向を計算
+        {
+            // 目標方向を計算
+            filter.RedScreen();
             Vector3 direction = (startPosition.position - transform.position).normalized;
 
             //  目標方向に向かって回転
@@ -146,6 +164,7 @@ public class PlayerManager : MonoBehaviour
             if (Vector3.Distance(transform.position, cameraTransform.position) < 0.1f)
             {
                 IsEating = false;
+                StartCoroutine(CallAfterDelay());
             }
         }
 
@@ -249,5 +268,20 @@ public class PlayerManager : MonoBehaviour
     public void Eat()
     {
         IsRotating = true;
+        // ↓これは使えない、分からん
+        gameEnd.StartFadeIn();
+    }
+
+    private IEnumerator CallAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(3f);
+        BackToTitle();
+    }
+
+    private void BackToTitle()
+    {
+        GameManager.Instance.IsGameClear = true;
+        GameManager.Instance.GameReset();
+        SceneManager.LoadScene("TitleScene");
     }
 }

@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public int clearStageNum;
 
+    public bool IsGameClear;
+
 
     [SerializeField] private ResultCanvasManager resultCanvasManager;
     [SerializeField] private AudioMixer audioMixer;
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         GameReset();
+        IsGameClear = false;
     }
 
     public void StageClear()
@@ -42,6 +45,7 @@ public class GameManager : MonoBehaviour
     public void GameReset()
     {
         clearStageNum = 0;
+        Time.timeScale = 1f;
     }
 
 

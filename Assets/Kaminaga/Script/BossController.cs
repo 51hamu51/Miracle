@@ -6,6 +6,7 @@ public enum BossState
     Move,
     Attack,
     Rush,
+    Evolve,
     Dead
 }
 
@@ -22,7 +23,12 @@ public class BossController : MonoBehaviour
     private int _loopTimer;
     private int _rushTimer;
     public bool _isAttack;
+    private bool _isEvolve;
     private int _attackCounter;
+    private int _maxAttackCount;
+    private int _attackDuration;
+    private int _rushDuration;
+    private int _waitDuration;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,7 +42,12 @@ public class BossController : MonoBehaviour
         _loopTimer = 0;
         _rushTimer = 0;
         _isAttack = false;
+        _isEvolve = false;
         _attackCounter = 0;
+        _maxAttackCount = 3;
+        _attackDuration = 40;
+        _rushDuration = 120;
+        _waitDuration = 100;
     }
 
     // Update is called once per frame
@@ -49,12 +60,10 @@ public class BossController : MonoBehaviour
         Debug.Log("�������Ă���G�̏��:" + _currentState.ToString());
 
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K)) // ボスが強い状態になる
         {
-            _currentState = BossState.Rush;
+            _currentState = BossState.Evolve;
         }
-
-
 
         switch (_currentState)
         {
@@ -66,12 +75,12 @@ public class BossController : MonoBehaviour
                 _myMaterial.color = Color.green;
                 _moveDirection = _playerDistance.normalized;
 
-                if (_loopTimer == 100)
+                if (_loopTimer == _waitDuration)
                 {
                     _isAttack = true;
                     _loopTimer = 0;
                     Debug.Log("�U��!");
-                    if(_attackCounter == 3)
+                    if (_attackCounter == _maxAttackCount)
                     {
                         _currentState = BossState.Rush;
                         _attackCounter = 0;
@@ -85,7 +94,7 @@ public class BossController : MonoBehaviour
             case BossState.Attack:
                 _myMaterial.color = Color.red;
                 _loopTimer++;
-                if (_loopTimer == 50)
+                if (_loopTimer == _attackDuration)
                 {
                     _isAttack = false;
                     _attackCounter++;
@@ -97,7 +106,7 @@ public class BossController : MonoBehaviour
                 _rushTimer++;
                 _myMaterial.color = Color.blue;
 
-                if (_rushTimer < 100)
+                if (_rushTimer < _waitDuration)
                 {
                     _moveDirection = -_playerDistance.normalized;
                 }
@@ -106,13 +115,19 @@ public class BossController : MonoBehaviour
                     _moveDirection = _playerDistance.normalized;
                     _moveSpeed = 0.30f;
                 }
-                if(_rushTimer >= 120)
+                if (_rushTimer >= _rushDuration)
                 {
                     _rushTimer = 0;
                     _moveSpeed = 0.01f;
                     _currentState = BossState.Move;
                 }
-                    break;
+                break;
+            case BossState.Evolve:
+                if (!_isEvolve)
+                {
+                    BossEvolve();
+                }
+                break;
             case BossState.Dead:
                 Destroy(gameObject);
                 break;
@@ -121,9 +136,20 @@ public class BossController : MonoBehaviour
         transform.position += _moveDirection * _moveSpeed;
         GetComponent<Renderer>().material = _myMaterial;
     }
-
     public void BossDead()
     {
         Destroy(gameObject);
+    }
+
+    private void BossEvolve()
+    {
+        _moveSpeed = 0.03f;
+        _myMaterial.color = Color.magenta;
+        _maxAttackCount = 2;
+        _attackDuration = 60;
+        _rushDuration = 100;
+        _waitDuration = 70;
+        _currentState = BossState.Move;
+        _isEvolve = true;
     }
 }
