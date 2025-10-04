@@ -27,7 +27,7 @@ public class EnemyController : MonoBehaviour
         {
             _isScared = true;
         }
-        else if(_playerDistance.magnitude > 5.0f)
+        else if (_playerDistance.magnitude > 5.0f)
         {
             _isScared = false;
         }
@@ -45,11 +45,8 @@ public class EnemyController : MonoBehaviour
         transform.position += _moveDirection * _moveSpeed;
     }
 
-    void OnCollisionEnter(Collision collision)
+    public void EnemyDead()
     {
-        if (collision.gameObject.name == "Player")
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 }
