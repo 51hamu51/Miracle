@@ -7,16 +7,12 @@ using UnityEngine.UI;
 
 public class TitleManager : MonoBehaviour
 {
-    [SerializeField] private GameObject optionPanel;
-    [SerializeField] private GameObject titleUis;
+    private TitleSceneManager titleSceneManager;
+    public static TitleManager Instance { get; private set; }
     [SerializeField] private AudioMixer audioMixer;
-    [SerializeField] private Slider bgmSlider;
-    [SerializeField] private Slider seSlider;
 
-    public Image logoImage;
     public Sprite titleSprite;
     public Sprite titleSprite2;
-    public Image titleBackImage;
     public Sprite titleBackSprite;
     public Sprite titleBackSprite2;
 
@@ -36,8 +32,20 @@ public class TitleManager : MonoBehaviour
     private const string BGM_VOLUME_PARAM = "BGMVolume";
     private const string SE_VOLUME_PARAM = "SEVolume";
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
+        titleSceneManager = GameObject.Find("TitleSceneManager").GetComponent<TitleSceneManager>();
         //// �J�[�\���摜���ŏ��͔�\���ɂ���
         //if (cursorImage != null)
         //{
@@ -53,13 +61,13 @@ public class TitleManager : MonoBehaviour
 
         if (GameManager.Instance.IsGameClear)
         {
-            logoImage.sprite = titleSprite2;
-            titleBackImage.sprite = titleBackSprite2;
+            titleSceneManager.logoImage.sprite = titleSprite2;
+            titleSceneManager.titleBackImage.sprite = titleBackSprite2;
         }
         else
         {
-            logoImage.sprite = titleSprite;
-            titleBackImage.sprite = titleBackSprite;
+            titleSceneManager.logoImage.sprite = titleSprite;
+            titleSceneManager.titleBackImage.sprite = titleBackSprite;
         }
     }
 
@@ -162,26 +170,43 @@ public class TitleManager : MonoBehaviour
 
     public void OpenOption()
     {
-        // �I�v�V������ʂ��J��
-        optionPanel.SetActive(true);
+        if (titleSceneManager == null)
+        {
+            Debug.LogError("titleSceneManager が見つかりません（破棄されている可能性）");
+            return;
+        }
 
-        // �X�V�������~�߂�
+        if (titleSceneManager.optionPanel != null)
+        {
+            titleSceneManager.optionPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("optionPanel が見つかりません（破棄されてる可能性）");
+        }
+
         this.enabled = false;
 
-        // �^�C�g��UI���\��
-        titleUis.SetActive(false);
+        if (titleSceneManager.titleUis != null)
+        {
+            titleSceneManager.titleUis.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("titleUis が見つかりません（破棄されてる可能性）");
+        }
     }
 
     public void CloseOption()
     {
         // ��ʂ����
-        optionPanel.SetActive(false);
+        titleSceneManager.optionPanel.SetActive(false);
 
         // �X�V�������J�n
         this.enabled = true;
 
         // �^�C�g��UI��\��
-        titleUis.SetActive(true);
+        titleSceneManager.titleUis.SetActive(true);
 
         //�{�^���ʒu�����Z�b�g
         //RectTransform buttonRect = menuButtons[0].GetComponent<RectTransform>();
@@ -227,5 +252,20 @@ public class TitleManager : MonoBehaviour
         // Unity�G�f�B�^�[�ł̓���
         /*  UnityEditor.EditorApplication.isPlaying = false;
          Application.Quit(); */
+    }
+
+    public void GetSceneManager()
+    {
+        titleSceneManager = GameObject.Find("TitleSceneManager").GetComponent<TitleSceneManager>();
+        if (GameManager.Instance.IsGameClear)
+        {
+            titleSceneManager.logoImage.sprite = titleSprite2;
+            titleSceneManager.titleBackImage.sprite = titleBackSprite2;
+        }
+        else
+        {
+            titleSceneManager.logoImage.sprite = titleSprite;
+            titleSceneManager.titleBackImage.sprite = titleBackSprite;
+        }
     }
 }

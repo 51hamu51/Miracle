@@ -9,37 +9,37 @@ using UnityEngine.UI;
 public class OptionSystem : MonoBehaviour
 {
 
-    // İ’è€–Ú
+    // ï¿½İ’è€ï¿½ï¿½
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider seSlider;
 
-    // y’Ç‰ÁzAudioSourceƒRƒ“ƒ|[ƒlƒ“ƒg‚Ö‚ÌQÆ
-    public AudioSource audioSource;
-    // y’Ç‰ÁzƒJ[ƒ\ƒ‹ˆÚ“®SE
+    // ï¿½yï¿½Ç‰ï¿½ï¿½zAudioSourceï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½Ö‚ÌQï¿½ï¿½
+    private AudioSource audioSource;
+    // ï¿½yï¿½Ç‰ï¿½ï¿½zï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½Ú“ï¿½SE
     public AudioClip moveSE;
-    // y’Ç‰ÁzŒˆ’èSE
+    // ï¿½yï¿½Ç‰ï¿½ï¿½zï¿½ï¿½ï¿½ï¿½SE
     public AudioClip decideSE;
 
-    // ƒIƒvƒVƒ‡ƒ“ƒƒjƒ…[‚Ì‘S€–Ú (Button, Slider‚È‚Ç‚ÌSelectableƒRƒ“ƒ|[ƒlƒ“ƒg)
+    // ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ì‘Sï¿½ï¿½ï¿½ï¿½ (Button, Sliderï¿½È‚Ç‚ï¿½Selectableï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½g)
     public Selectable[] menuItems;
     public Image cursorImage;
     public float cursorOffset = 50f;
-    //public TitleManager titleManager; // ƒ^ƒCƒgƒ‹‰æ–Ê‚É–ß‚é‚½‚ß‚É•K—v
+    //public TitleManager titleManager; // ï¿½^ï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½Ê‚É–ß‚é‚½ï¿½ß‚É•Kï¿½v
 
     private int currentIndex = 0;
 
-    // ƒXƒ‰ƒCƒ_[‚Ì’²®ƒXƒeƒbƒvi¶‰EƒL[‚Å‚Ç‚ê‚¾‚¯‘Œ¸‚³‚¹‚é‚©j
+    // ï¿½Xï¿½ï¿½ï¿½Cï¿½_ï¿½[ï¿½Ì’ï¿½ï¿½ï¿½ï¿½Xï¿½eï¿½bï¿½vï¿½iï¿½ï¿½ï¿½Eï¿½Lï¿½[ï¿½Å‚Ç‚ê‚¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚©ï¿½j
     private const float SLIDER_STEP = 1.0f;
 
-    // AudioMixer‚ÌExposed Parameter–¼‚Æˆê’v‚³‚¹‚é
+    // AudioMixerï¿½ï¿½Exposed Parameterï¿½ï¿½ï¿½Æˆï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private const string BGM_VOLUME_PARAM = "BGMVolume";
     private const string SE_VOLUME_PARAM = "SEVolume";
 
-    // dB’l‚ğƒXƒ‰ƒCƒ_[’l‚É•ÏŠ·‚·‚éƒwƒ‹ƒp[ŠÖ”‚ğ’è‹`
+    // dBï¿½lï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½Cï¿½_ï¿½[ï¿½lï¿½É•ÏŠï¿½ï¿½ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½pï¿½[ï¿½Öï¿½ï¿½ï¿½ï¿½`
     private float DbToSliderValue(float dB)
     {
-        // 0dBˆÈã‚ÍÅ‘å’l1B‚»‚êˆÈŠO‚Í‘Î”‚©‚ç‹tZB
+        // 0dBï¿½Èï¿½ÍÅ‘ï¿½l1ï¿½Bï¿½ï¿½ï¿½ï¿½ÈŠOï¿½Í‘Îï¿½ï¿½ï¿½ï¿½ï¿½tï¿½Zï¿½B
         if (dB >= 0f) return 1f;
 
         return Mathf.Clamp01(Mathf.Pow(10f, dB / 20f));
@@ -47,34 +47,32 @@ public class OptionSystem : MonoBehaviour
 
     public void Start()
     {
-        //BGM
-        audioMixer.GetFloat(BGM_VOLUME_PARAM, out float bgmVolume);
-        // C³ƒfƒVƒxƒ‹’l‚©‚çƒXƒ‰ƒCƒ_[’l‚É•ÏŠ·‚µ‚Ä‘ã“ü
-        bgmSlider.value = bgmVolume;
+        audioSource = TitleManager.Instance.audioSource;
 
-        //SE
+        audioMixer.GetFloat(BGM_VOLUME_PARAM, out float bgmVolume);
+        bgmSlider.value = DbToSliderValue(bgmVolume);
+
         audioMixer.GetFloat(SE_VOLUME_PARAM, out float seVolume);
-        // C³ƒfƒVƒxƒ‹’l‚©‚çƒXƒ‰ƒCƒ_[’l‚É•ÏŠ·‚µ‚Ä‘ã“ü
-        seSlider.value = seVolume;
-        //‰ŠúˆÊ’u
+        seSlider.value = DbToSliderValue(seVolume);
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ê’u
         ResetPos();
     }
 
-    // y’Ç‰ÁzŒø‰Ê‰¹‚ğÄ¶‚·‚éƒwƒ‹ƒp[ŠÖ”
+    // ï¿½yï¿½Ç‰ï¿½ï¿½zï¿½ï¿½ï¿½Ê‰ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½pï¿½[ï¿½Öï¿½
     private void PlaySound(AudioClip clip)
     {
         if (audioSource != null && clip != null)
         {
-            audioSource.PlayOneShot(clip); // Œ»İÄ¶’†‚Ì‰¹‚ª‚ ‚Á‚Ä‚àAd‚Ë‚ÄÄ¶‚·‚é
+            audioSource.PlayOneShot(clip); // ï¿½ï¿½ï¿½İÄï¿½ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Aï¿½dï¿½Ë‚ÄÄï¿½ï¿½ï¿½ï¿½ï¿½
         }
     }
 
     void ResetPos()
     {
-        // ‰ŠúˆÊ’u‚Í0”Ô–Ú‚Ì€–Ú‚ÌˆÊ’u‚É‡‚í‚¹‚é
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½ï¿½0ï¿½Ô–Ú‚Ìï¿½ï¿½Ú‚ÌˆÊ’uï¿½Éï¿½ï¿½í‚¹ï¿½ï¿½
         RectTransform itemRect = menuItems[0].GetComponent<RectTransform>();
 
-        // ƒJ[ƒ\ƒ‹‚ÌˆÊ’u‚ğƒ{ƒ^ƒ“‚Ì¶‘¤‚Éİ’è
+        // ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½Éİ’ï¿½
         float xPos = itemRect.position.x - itemRect.rect.width / 2f - cursorOffset;
         float yPos = itemRect.position.y;
 
@@ -83,30 +81,30 @@ public class OptionSystem : MonoBehaviour
 
     public void Update()
     {
-        // ƒIƒvƒVƒ‡ƒ“€–Ú‚Ì‘I‘ğˆ—
+        // ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú‚Ì‘Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         // ----------------------------------------------------
-        // 1. ã‰ºƒL[‚Å‚ÌƒiƒrƒQ[ƒVƒ‡ƒ“
+        // 1. ï¿½ã‰ºï¿½Lï¿½[ï¿½Å‚Ìƒiï¿½rï¿½Qï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
         // ----------------------------------------------------
         bool moved = false;
 
-        // ãƒL[
+        // ï¿½ï¿½Lï¿½[
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             currentIndex--;
-            if (currentIndex < 0) currentIndex = menuItems.Length - 1; // ƒ‹[ƒv
+            if (currentIndex < 0) currentIndex = menuItems.Length - 1; // ï¿½ï¿½ï¿½[ï¿½v
             moved = true;
 
-            // Œø‰Ê‰¹‚ğÄ¶
+            // ï¿½ï¿½ï¿½Ê‰ï¿½ï¿½ï¿½ï¿½Äï¿½
             PlaySound(moveSE);
         }
-        // ‰ºƒL[
+        // ï¿½ï¿½ï¿½Lï¿½[
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             currentIndex++;
-            if (currentIndex >= menuItems.Length) currentIndex = 0; // ƒ‹[ƒv
+            if (currentIndex >= menuItems.Length) currentIndex = 0; // ï¿½ï¿½ï¿½[ï¿½v
             moved = true;
 
-            // Œø‰Ê‰¹‚ğÄ¶
+            // ï¿½ï¿½ï¿½Ê‰ï¿½ï¿½ï¿½ï¿½Äï¿½
             PlaySound(moveSE);
         }
 
@@ -114,21 +112,21 @@ public class OptionSystem : MonoBehaviour
         {
             SelectNewItem(currentIndex);
 
-            // Œø‰Ê‰¹‚ğÄ¶
+            // ï¿½ï¿½ï¿½Ê‰ï¿½ï¿½ï¿½ï¿½Äï¿½
             PlaySound(moveSE);
 
-            // ã‰ºˆÚ“®‚µ‚½‚çAƒXƒ‰ƒCƒ_[‚Ì‘€ìƒ‚[ƒh‚©‚ç”²‚¯‚é‚½‚ß‚É”O‚Ì‚½‚ß¶‰EƒL[“ü—Í‚ğƒŠƒZƒbƒg  
+            // ï¿½ã‰ºï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Xï¿½ï¿½ï¿½Cï¿½_ï¿½[ï¿½Ì‘ï¿½ï¿½ìƒ‚ï¿½[ï¿½hï¿½ï¿½ï¿½ç”²ï¿½ï¿½ï¿½é‚½ï¿½ß‚É”Oï¿½Ì‚ï¿½ï¿½ßï¿½ï¿½Eï¿½Lï¿½[ï¿½ï¿½ï¿½Í‚ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g  
             return;
         }
 
 
         // ----------------------------------------------------
-        // 2. Œˆ’è/‘€ìƒL[‚Ìˆ—
+        // 2. ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Lï¿½[ï¿½Ìï¿½ï¿½ï¿½
         // ----------------------------------------------------
 
-        // Œ»İ‘I‘ğ’†‚Ì€–Ú‚ğæ“¾
+        // ï¿½ï¿½ï¿½İ‘Iï¿½ğ’†‚Ìï¿½ï¿½Ú‚ï¿½ï¿½æ“¾
         Selectable currentItem = menuItems[currentIndex];
-        // ‘I‘ğ€–Ú‚ªSlider‚Ìê‡A¶‰EƒL[‚Å’l‚ğ•ÏX‚·‚é
+        // ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Ú‚ï¿½Sliderï¿½Ìê‡ï¿½Aï¿½ï¿½ï¿½Eï¿½Lï¿½[ï¿½Å’lï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½
         Slider currentSlider = currentItem as Slider;
         if (currentSlider != null)
         {
@@ -137,71 +135,71 @@ public class OptionSystem : MonoBehaviour
             {
                 float currentValue = currentSlider.value;
 
-                // ‰EƒL[: ’l‚ğ‘‚â‚·
+                // ï¿½Eï¿½Lï¿½[: ï¿½lï¿½ğ‘‚â‚·
                 if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                 {
                     currentValue += SLIDER_STEP;
-                    // ’l‚Ì”ÍˆÍ“à‚Å‚ ‚é‚±‚Æ‚ğ•ÛØ
+                    // ï¿½lï¿½Ì”ÍˆÍ“ï¿½ï¿½Å‚ï¿½ï¿½é‚±ï¿½Æ‚ï¿½Ûï¿½
                     currentSlider.value = Mathf.Min(currentValue, currentSlider.maxValue);
-                    // Œø‰Ê‰¹‚ğÄ¶
+                    // ï¿½ï¿½ï¿½Ê‰ï¿½ï¿½ï¿½ï¿½Äï¿½
                     PlaySound(moveSE);
                     sliderChanged = true;
                 }
-                // ¶ƒL[: ’l‚ğŒ¸‚ç‚·
+                // ï¿½ï¿½ï¿½Lï¿½[: ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ç‚·
                 else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                 {
                     currentValue -= SLIDER_STEP;
-                    // ’l‚Ì”ÍˆÍ“à‚Å‚ ‚é‚±‚Æ‚ğ•ÛØ
+                    // ï¿½lï¿½Ì”ÍˆÍ“ï¿½ï¿½Å‚ï¿½ï¿½é‚±ï¿½Æ‚ï¿½Ûï¿½
                     currentSlider.value = Mathf.Max(currentValue, currentSlider.minValue);
-                    // Œø‰Ê‰¹‚ğÄ¶
+                    // ï¿½ï¿½ï¿½Ê‰ï¿½ï¿½ï¿½ï¿½Äï¿½
                     PlaySound(moveSE);
                     sliderChanged = true;
                 }
             }
 
-            // SpaceƒL[: Œˆ’è
+            // Spaceï¿½Lï¿½[: ï¿½ï¿½ï¿½ï¿½
             else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
-                // Selectable‚É‚ÍOnClickƒCƒxƒ“ƒg‚ª‚È‚¢‚½‚ßAButtonƒRƒ“ƒ|[ƒlƒ“ƒg‚ÉƒLƒƒƒXƒg‚µ‚ÄInvoke
+                // Selectableï¿½É‚ï¿½OnClickï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ßAButtonï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½ÉƒLï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½Invoke
                 Button currentButton = currentItem as Button;
                 if (currentButton != null)
                 {
-                    // Œø‰Ê‰¹‚ğÄ¶
+                    // ï¿½ï¿½ï¿½Ê‰ï¿½ï¿½ï¿½ï¿½Äï¿½
                     PlaySound(decideSE);
                     currentButton.onClick.Invoke();
                 }
-                // ƒXƒ‰ƒCƒ_[€–Ú‚Å‚ÍSpaceƒL[‚Í“Á‚É‰½‚à‚µ‚È‚¢‚±‚Æ‚ª‘½‚¢‚Å‚·‚ªA
-                // •K—v‚É‰‚¶‚ÄƒgƒOƒ‹‚â“Á•Ê‚Èˆ—‚ğİ’è‚·‚é‚±‚Æ‚à‰Â”\‚Å‚·B
+                // ï¿½Xï¿½ï¿½ï¿½Cï¿½_ï¿½[ï¿½ï¿½ï¿½Ú‚Å‚ï¿½Spaceï¿½Lï¿½[ï¿½Í“ï¿½ï¿½É‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½A
+                // ï¿½Kï¿½vï¿½É‰ï¿½ï¿½ï¿½ï¿½Äƒgï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê‚Èï¿½ï¿½ï¿½ï¿½ï¿½İ’è‚·ï¿½é‚±ï¿½Æ‚ï¿½ï¿½Â”\ï¿½Å‚ï¿½ï¿½B
             }
             if (sliderChanged)
             {
                 if (currentSlider == bgmSlider)
                 {
-                    SetBGMVolume(currentSlider.value);
+                    TitleManager.Instance.SetBGMVolume(currentSlider.value);
                 }
                 else if (currentSlider == seSlider)
                 {
-                    SetSEVolume(currentSlider.value);
+                    TitleManager.Instance.SetSEVolume(currentSlider.value);
                 }
             }
         }
     }
 
-    // ‘I‘ğ‚³‚ê‚½€–Ú‚ğƒnƒCƒ‰ƒCƒg‚µAƒJ[ƒ\ƒ‹‚ğˆÚ“®‚³‚¹‚éŠÖ”
+    // ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Ú‚ï¿½ï¿½nï¿½Cï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½Aï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
     private void SelectNewItem(int index)
     {
         if (index < 0 || index >= menuItems.Length) return;
 
-        // EventSystem‚ÉV‚µ‚¢‘I‘ğ€–Ú‚ğİ’è (Button‚ÌHighlighted Color‚Ì•ÏX‚Ég—p)
+        // EventSystemï¿½ÉVï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Ú‚ï¿½İ’ï¿½ (Buttonï¿½ï¿½Highlighted Colorï¿½Ì•ÏXï¿½Égï¿½p)
         EventSystem.current.SetSelectedGameObject(menuItems[index].gameObject);
 
-        // ƒJ[ƒ\ƒ‹‰æ‘œ‚ğ—LŒø‚É‚µAˆÊ’u‚ğ’²®
+        // ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½æ‘œï¿½ï¿½Lï¿½ï¿½ï¿½É‚ï¿½ï¿½Aï¿½Ê’uï¿½ğ’²ï¿½
         if (cursorImage != null)
         {
             cursorImage.gameObject.SetActive(true);
             RectTransform itemRect = menuItems[index].GetComponent<RectTransform>();
 
-            // ƒJ[ƒ\ƒ‹‚ÌˆÊ’u‚ğƒ{ƒ^ƒ“‚Ì¶‘¤‚Éİ’è
+            // ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½Éİ’ï¿½
             float xPos = itemRect.position.x - itemRect.rect.width / 2f - cursorOffset;
             float yPos = itemRect.position.y;
 
@@ -211,34 +209,45 @@ public class OptionSystem : MonoBehaviour
 
     public void SetBGMVolume(float volume)
     {
-        // volume‚ğƒfƒVƒxƒ‹’l‚É•ÏŠ·
+        // volumeï¿½ï¿½ï¿½fï¿½Vï¿½xï¿½ï¿½ï¿½lï¿½É•ÏŠï¿½
         //float decibel = Mathf.Log10(volume) * 20f;
 
-        //// 0‚Ìê‡
+        //// 0ï¿½Ìê‡
         //if (volume == 0f)
         //{
-        //    // Å¬’l‚ğİ’è
+        //    // ï¿½Åï¿½ï¿½lï¿½ï¿½İ’ï¿½
         //    decibel = -80f;
         //}
 
-        // AudioMixer‚É’l‚ğİ’è
-        audioMixer.SetFloat(BGM_VOLUME_PARAM, volume);
+        // AudioMixerï¿½É’lï¿½ï¿½İ’ï¿½
+        /* float dB;
+        if (volume <= 0.0001f) dB = -80f;
+        else dB = Mathf.Log10(volume) * 20f;
+        audioMixer.SetFloat("BGMVolume", dB); */
+        TitleManager.Instance.SetBGMVolume(bgmSlider.value);
     }
+
+
+
 
     public void SetSEVolume(float volume)
     {
-        //// volume‚ğƒfƒVƒxƒ‹’l‚É•ÏŠ·
+        //// volumeï¿½ï¿½ï¿½fï¿½Vï¿½xï¿½ï¿½ï¿½lï¿½É•ÏŠï¿½
         //float decibel = Mathf.Log10(volume) * 20f;
 
-        //// 0‚Ìê‡
+        //// 0ï¿½Ìê‡
         //if (volume == 0f)
         //{
-        //    // Å¬’l‚ğİ’è
+        //    // ï¿½Åï¿½ï¿½lï¿½ï¿½İ’ï¿½
         //    decibel = -80f;
         //}
 
-        // AudioMixer‚É’l‚ğİ’è
-        audioMixer.SetFloat(SE_VOLUME_PARAM, volume);
+        // AudioMixerï¿½É’lï¿½ï¿½İ’ï¿½
+        /* float dB;
+        if (volume <= 0.0001f) dB = -80f;
+        else dB = Mathf.Log10(volume) * 20f;
+        audioMixer.SetFloat(SE_VOLUME_PARAM, dB); */
+        TitleManager.Instance.SetSEVolume(bgmSlider.value);
     }
 
     public void Close()
@@ -250,7 +259,7 @@ public class OptionSystem : MonoBehaviour
 
     public void ChangeTitle()
     {
-        // ƒ^ƒCƒgƒ‹‚Ö–ß‚é
+        // ï¿½^ï¿½Cï¿½gï¿½ï¿½ï¿½Ö–ß‚ï¿½
         SceneManager.LoadScene("TitleScene");
     }
 }

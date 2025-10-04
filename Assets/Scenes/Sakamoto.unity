@@ -3194,56 +3194,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298025199}
   m_CullTransparentMesh: 1
---- !u!1 &1324837200
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1324837201}
-  - component: {fileID: 1324837202}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1324837201
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324837200}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 480, y: 270, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1324837202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324837200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 156045da3afd77f41922936046e7134c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clearStageNum: 0
-  IsGameClear: 0
-  resultCanvasManager: {fileID: 0}
-  audioMixer: {fileID: 0}
-  optionPanel: {fileID: 0}
-  optionOpenButton: {fileID: 0}
 --- !u!1001 &1410706137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6619,6 +6569,7 @@ MonoBehaviour:
   IsRotating2: 0
   IsEating: 0
   IsMoving: 0
+  IsRed: 0
   filter: {fileID: 1787700159}
   startPosition: {fileID: 1416499314}
   cameraTransform: {fileID: 464102178}
@@ -7258,7 +7209,6 @@ SceneRoots:
   - {fileID: 1765785009}
   - {fileID: 438503950}
   - {fileID: 669273437}
-  - {fileID: 1324837201}
   - {fileID: 682039888}
   - {fileID: 841129938}
   - {fileID: 7587833194951475449}

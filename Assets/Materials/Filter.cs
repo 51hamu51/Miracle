@@ -65,26 +65,32 @@ public class Filter : MonoBehaviour
                                 chromaticAberration.intensity.value = 1f;
                             }
 
-                            else if (GameManager.Instance.clearStageNum == 3)
-                            {
-                                bloom.threshold.value = 0f;
-                                bloom.intensity.value = 0.1f;
-                                bloom.scatter.value = 1f;
-                                bloom.dirtIntensity.value = 100f;
-                                filmGrain.type.value = FilmGrainLookup.Medium3;
-                                filmGrain.intensity.value = 1f;
-                                filmGrain.response.value = Mathf.PingPong(Time.time * 0.5f, 1f);
-                                vignette.color.value = Color.red;
-                                vignette.intensity.value = 0.4f;
-                                vignette.smoothness.value = 1f;
-                                colorAdjustments.contrast.value = 100f;
+                            /*  else if (GameManager.Instance.clearStageNum == 3)
+                             {
+                                 bloom.threshold.value = 0f;
+                                 bloom.intensity.value = 0.1f;
+                                 bloom.scatter.value = 1f;
+                                 bloom.dirtIntensity.value = 100f;
+                                 filmGrain.type.value = FilmGrainLookup.Medium3;
+                                 filmGrain.intensity.value = 1f;
+                                 filmGrain.response.value = Mathf.PingPong(Time.time * 0.5f, 1f);
+                                 vignette.color.value = Color.red;
+                                 vignette.intensity.value = 0.4f;
+                                 vignette.smoothness.value = 1f;
+                                 colorAdjustments.contrast.value = 100f;
 
-                            }
+                             } */
                         }
     }
 
     public void RedScreen()
     {
+        Debug.Log("RedScreen");
+        if (bloom == null) Debug.LogError("bloomがnull");
+        if (filmGrain == null) Debug.LogError("filmGrainがnull");
+        if (vignette == null) Debug.LogError("vignetteがnull");
+        if (chromaticAberration == null) Debug.LogError("chromaticAberrationがnull");
+        if (colorAdjustments == null) Debug.LogError("colorAdjustmentsがnull");
         bloom.threshold.value = 0f;
         bloom.intensity.value = 0.1f;
         bloom.scatter.value = 1f;
