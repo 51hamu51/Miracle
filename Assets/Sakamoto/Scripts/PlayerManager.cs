@@ -1,6 +1,7 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerManager : MonoBehaviour
@@ -42,7 +43,11 @@ public class PlayerManager : MonoBehaviour
     public bool IsRotating2;
     public bool IsEating;
     public bool IsMoving;
+
+    public bool IsFading;
+
     public bool IsRed;
+
 
     public Filter filter;
 
@@ -56,6 +61,9 @@ public class PlayerManager : MonoBehaviour
     /// ボスを倒したときの回復ボーナス(倍率)
     /// </summary>
     [SerializeField] private float bossBonus;
+
+
+    [SerializeField] private GameEndEffect gameEnd;
 
     // 目標の角度
     private Quaternion targetRotation;
@@ -75,18 +83,30 @@ public class PlayerManager : MonoBehaviour
         IsRotating2 = false;
         IsEating = false;
         IsMoving = false;
+
+        IsFading = false;
+
+        // ↓これは使える、分からん
+         gameEnd.StartFadeIn();
+
         IsRed = false;
+
     }
 
     void Update()
-    {
+    { 
+        
+
         if (IsRotating)
+
+
         { // 目標方向を計算
             if (!IsRed)
             {
                 filter.RedScreen();
                 IsRed = true;
             }
+
             Vector3 direction = (startPosition.position - transform.position).normalized;
 
             //  目標方向に向かって回転
@@ -262,6 +282,8 @@ public class PlayerManager : MonoBehaviour
     public void Eat()
     {
         IsRotating = true;
+        // ↓これは使えない、分からん
+        gameEnd.StartFadeIn();
     }
 
     private IEnumerator CallAfterDelay()

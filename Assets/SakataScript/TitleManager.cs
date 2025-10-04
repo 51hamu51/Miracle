@@ -112,9 +112,10 @@ public class TitleManager : MonoBehaviour
             // ���ݑI�𒆂̃{�^����OnClick�C�x���g�����s
             if (menuButtons.Length > currentSelectedButtonIndex)
             {
-                menuButtons[currentSelectedButtonIndex].onClick.Invoke();
+                menuButtons[currentSelectedButtonIndex].onClick.Invoke();           
+
             }
-            PlaySound(decideSE);
+           PlaySound(decideSE);
         }
     }
 
