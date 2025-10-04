@@ -9,6 +9,9 @@ public class PlayerManager : MonoBehaviour
     private float timer;
     [SerializeField] private int recoverAmount;
 
+    private bool IsDead;
+    private bool IsClear;
+
     private Vector3 initialScale; // 初期サイズを保持
 
     void Start()
@@ -17,10 +20,17 @@ public class PlayerManager : MonoBehaviour
         timer = 0f;
         initialScale = transform.localScale;
         UpdatePlayerScale();
+        IsDead = false;
+        IsClear = false;
     }
 
     void Update()
     {
+        if (IsDead || IsClear)
+        {
+            return;
+        }
+
         timer += Time.deltaTime;
 
         if (timer >= damageInterval)
@@ -30,6 +40,18 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("HP: " + playerHP);
 
             UpdatePlayerScale();
+        }
+
+        if (playerHP <= 0)
+        {
+            IsDead = true;
+            GameManager.Instance.Dead();
+        }
+
+        if (playerHP >= playerMaxHP)
+        {
+            IsClear = true;
+            GameManager.Instance.StageClear();
         }
     }
 
