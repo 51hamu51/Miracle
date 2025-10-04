@@ -3,6 +3,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    /// <summary>
+    /// ステージをクリアした回数
+    /// </summary>
     public int clearStageNum;
     private void Awake()
     {
