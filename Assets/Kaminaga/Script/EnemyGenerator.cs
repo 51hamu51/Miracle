@@ -16,6 +16,7 @@ public class EnemyGenerator : MonoBehaviour
     private const int _effectStopDuration = 25; // エフェクトが止まる時間
     private int _effectStopTimer;
     private bool _isSpawning;
+    private bool _isSpawnRight;
     void Start()
     {
         _enemyPrefab = (GameObject)Resources.Load("ScareEnemy");
@@ -27,6 +28,7 @@ public class EnemyGenerator : MonoBehaviour
         _spawnTimer = 0;
         _effectStopTimer = 0;
         _isSpawning = false;
+        _isSpawnRight = false;
     }
 
     void FixedUpdate()
@@ -40,8 +42,15 @@ public class EnemyGenerator : MonoBehaviour
         {
             SetSpawnPoint();
             _isSpawning = true;
-            _spawnArea = _spawnPositionCenter + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f, Random.Range(-5.0f, 5.0f));
-            _spawnTimer = 0;
+            if (_isSpawnRight)
+            {
+                _spawnArea = _spawnPositionCenter + new Vector3(Random.Range(-5.5f, -2.0f), 0.0f, Random.Range(-4.0f, 7.0f));
+            }
+            else
+            {
+                _spawnArea = _spawnPositionCenter + new Vector3(Random.Range(2.0f, 5.5f), 0.0f, Random.Range(-4.0f, 7.0f));
+            }
+                _spawnTimer = 0;
         }
 
         
@@ -81,10 +90,12 @@ public class EnemyGenerator : MonoBehaviour
         if ((_player.transform.position - _spawnPositionLef.transform.position).magnitude > (_player.transform.position - _spawnPositionRig.transform.position).magnitude)
         {
             _spawnPositionCenter = _spawnPositionRig.transform.position;
+            _isSpawnRight = true;
         }
         else
         {
             _spawnPositionCenter = _spawnPositionLef.transform.position;
+            _isSpawnRight = false;
         }
         _spawnEffect.transform.position = _spawnPositionCenter;
     }
