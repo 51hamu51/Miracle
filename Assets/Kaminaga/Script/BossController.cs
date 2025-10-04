@@ -14,6 +14,7 @@ public class BossController : MonoBehaviour
     private GameObject _player;
     private Vector3 _playerDistance;
     private Vector3 _moveDirection;
+    private Vector3 _lookPlayer;
     private Material _myMaterial;
     private float _moveSpeed;
     private BossState _currentState;
@@ -29,6 +30,7 @@ public class BossController : MonoBehaviour
         _myMaterial = GetComponent<Renderer>().material;
         _playerDistance = Vector3.zero;
         _moveDirection = Vector3.zero;
+        _lookPlayer = Vector3.zero;
         _moveSpeed = 0.01f;
         _currentState = BossState.Move;
         _loopTimer = 0;
@@ -41,7 +43,9 @@ public class BossController : MonoBehaviour
     void FixedUpdate()
     {
         _playerDistance = _player.transform.position - transform.position;
-        transform.LookAt(_player.transform);
+        _lookPlayer = _playerDistance.normalized;
+        _lookPlayer.y = 0.0f;
+        transform.rotation = Quaternion.LookRotation(_lookPlayer);
         Debug.Log("�������Ă���G�̏��:" + _currentState.ToString());
 
 
