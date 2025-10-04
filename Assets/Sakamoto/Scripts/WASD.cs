@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class WASD : MonoBehaviour
@@ -9,9 +10,18 @@ public class WASD : MonoBehaviour
     private float _input_x;
     //z軸方向の入力を保存
     private float _input_z;
+    
+    private PlayerManager _playerManager;
+
+    private void Start() {
+        _playerManager = GetComponent<PlayerManager>();
+    }
 
     void Update()
     {
+        if (!_playerManager.CanMove) {
+            return;
+        }
         //x軸方向、z軸方向の入力を取得
         //Horizontal、水平、横方向のイメージ
         _input_x = Input.GetAxis("Horizontal");

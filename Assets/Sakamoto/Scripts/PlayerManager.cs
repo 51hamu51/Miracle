@@ -29,6 +29,8 @@ public class PlayerManager : MonoBehaviour
     private bool IsDead;
     private bool IsClear;
 
+    public bool CanMove => !IsDead;
+
     private Vector3 initialScale; // 初期サイズを保持
     private BossController bossController;
     private EnemyController enemyController;
