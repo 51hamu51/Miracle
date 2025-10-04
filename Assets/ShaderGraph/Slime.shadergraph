@@ -753,7 +753,7 @@
     },
     "m_PreviewData": {
         "serializedMesh": {
-            "m_SerializedMesh": "{\"mesh\":{\"fileID\":10200,\"guid\":\"0000000000000000e000000000000000\",\"type\":0}}",
+            "m_SerializedMesh": "{\"mesh\":{\"fileID\":-7760074845545069097,\"guid\":\"37659dc34a1e90e4cb317e1c2a67403a\",\"type\":3}}",
             "m_Guid": ""
         },
         "preventRotation": false
