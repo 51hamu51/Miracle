@@ -5,10 +5,21 @@ public class PlayerManager : MonoBehaviour
     public int playerHP;
     [SerializeField] private int playerMaxHP;
     [SerializeField] private int playerFirstHP;
-    [SerializeField] private int damageInterval;
+
+    /// <summary>
+    /// 継続ダメージを受ける間隔
+    /// </summary>
+    [SerializeField] private float damageInterval;
     private float timer;
+
+    /// <summary>
+    /// 敵を倒したときの回復量
+    /// </summary>
     [SerializeField] private int recoverAmount;
 
+    /// <summary>
+    /// 敵を倒すのにかかる時間
+    /// </summary>
     [SerializeField] private float drainTime;
     private float drainTimer;
     private bool IsDrain;
@@ -18,9 +29,16 @@ public class PlayerManager : MonoBehaviour
     private bool IsDead;
     private bool IsClear;
 
+    public bool CanMove => !IsDead;
+
     private Vector3 initialScale; // 初期サイズを保持
-    public BossController bossController;
-    public EnemyController enemyController;
+    private BossController bossController;
+    private EnemyController enemyController;
+
+    /// <summary>
+    /// ボスを倒したときの回復ボーナス(倍率)
+    /// </summary>
+    [SerializeField] private float bossBonus;
 
     void Start()
     {
@@ -106,19 +124,21 @@ public class PlayerManager : MonoBehaviour
 
     void RecoverHP(int amount)
     {
-        playerHP = Mathf.Min(playerHP + amount, playerMaxHP);
-        Debug.Log("回復！HP: " + playerHP);
-        IsDrain = false;
-        drainTimer = 0;
-        UpdatePlayerScale();
         if (bossController != null)
         {
+            playerHP = (int)Mathf.Min(playerHP + bossBonus * amount, playerMaxHP);
             bossController.BossDead();
         }
         if (enemyController != null)
         {
+            playerHP = Mathf.Min(playerHP + amount, playerMaxHP);
             enemyController.EnemyDead();
         }
+
+        Debug.Log("回復！HP: " + playerHP);
+        IsDrain = false;
+        drainTimer = 0;
+        UpdatePlayerScale();
     }
 
     void Attacked(int amount)
