@@ -42,6 +42,7 @@ public class PlayerManager : MonoBehaviour
     public bool IsRotating2;
     public bool IsEating;
     public bool IsMoving;
+    public bool IsRed;
 
     public Filter filter;
 
@@ -74,13 +75,18 @@ public class PlayerManager : MonoBehaviour
         IsRotating2 = false;
         IsEating = false;
         IsMoving = false;
+        IsRed = false;
     }
 
     void Update()
     {
         if (IsRotating)
         { // 目標方向を計算
-            filter.RedScreen();
+            if (!IsRed)
+            {
+                filter.RedScreen();
+                IsRed = true;
+            }
             Vector3 direction = (startPosition.position - transform.position).normalized;
 
             //  目標方向に向かって回転

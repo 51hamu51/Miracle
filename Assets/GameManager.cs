@@ -14,8 +14,6 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameClear;
 
-
-    [SerializeField] private ResultCanvasManager resultCanvasManager;
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject optionOpenButton;
