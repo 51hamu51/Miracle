@@ -7,17 +7,20 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    /// <summary>
+    /// ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢ã—ãŸå›æ•°
+    /// </summary>
     public int clearStageNum;
 
 
-    [SerializeField] private ResultCanvasManager resultCanvasManager;  
+    [SerializeField] private ResultCanvasManager resultCanvasManager;
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject optionOpenButton;
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider seSlider;
 
-    // AudioMixer‚ÌExposed Parameter–¼‚Æˆê’v‚³‚¹‚é
+    // AudioMixerï¿½ï¿½Exposed Parameterï¿½ï¿½ï¿½Æˆï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private const string BGM_VOLUME_PARAM = "BGMVolume";
     private const string SE_VOLUME_PARAM = "SEVolume";
 
@@ -45,64 +48,64 @@ public class GameManager : MonoBehaviour
 
     public void SetBGMVolume(float volume)
     {
-        // volume‚ğƒfƒVƒxƒ‹’l‚É•ÏŠ·
+        // volumeï¿½ï¿½ï¿½fï¿½Vï¿½xï¿½ï¿½ï¿½lï¿½É•ÏŠï¿½
         float decibel = Mathf.Log10(volume) * 20f;
 
-        // 0‚Ìê‡
+        // 0ï¿½Ìê‡
         if (volume == 0f)
         {
-            // Å¬’l‚ğİ’è
+            // ï¿½Åï¿½ï¿½lï¿½ï¿½İ’ï¿½
             decibel = -80f;
         }
 
-        // AudioMixer‚É’l‚ğİ’è
+        // AudioMixerï¿½É’lï¿½ï¿½İ’ï¿½
         audioMixer.SetFloat(BGM_VOLUME_PARAM, decibel);
     }
 
     public void SetSEVolume(float volume)
     {
-        // volume‚ğƒfƒVƒxƒ‹’l‚É•ÏŠ·
+        // volumeï¿½ï¿½ï¿½fï¿½Vï¿½xï¿½ï¿½ï¿½lï¿½É•ÏŠï¿½
         float decibel = Mathf.Log10(volume) * 20f;
 
-        // 0‚Ìê‡
+        // 0ï¿½Ìê‡
         if (volume == 0f)
         {
-            // Å¬’l‚ğİ’è
+            // ï¿½Åï¿½ï¿½lï¿½ï¿½İ’ï¿½
             decibel = -80f;
         }
 
-        // AudioMixer‚É’l‚ğİ’è
+        // AudioMixerï¿½É’lï¿½ï¿½İ’ï¿½
         audioMixer.SetFloat(SE_VOLUME_PARAM, decibel);
     }
 
     public void OpenOption()
     {
-        // •\¦‚³‚¹‚é
+        // ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         optionPanel.SetActive(true);
 
-        // ƒ{ƒ^ƒ“‚ğ”ñ•\¦‚É‚·‚é
+        // ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½
         optionOpenButton.SetActive(false);
 
-        // ƒQ[ƒ€‚ğˆê’â~
+        // ï¿½Qï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½êï¿½ï¿½~
         Time.timeScale = 0f;
     }
 
     public void CloseOption()
     {
-        // ‰æ–Ê‚ğ•Â‚¶‚é
+        // ï¿½ï¿½Ê‚ï¿½Â‚ï¿½ï¿½ï¿½
         optionPanel.SetActive(false);
 
-        // ƒ{ƒ^ƒ“‚ğ•\¦‚·‚é
+        // ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         optionOpenButton.SetActive(true);
 
-        // ƒQ[ƒ€‚ğÄŠJ
+        // ï¿½Qï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ÄŠJ
         Time.timeScale = 1f;
     }
 
     public void ChangeTitle()
     {
-        Debug.Log("ƒQ[ƒ€ƒXƒ^[ƒgI");
-        // ƒ^ƒCƒgƒ‹‚Ö–ß‚é
+        Debug.Log("ï¿½Qï¿½[ï¿½ï¿½ï¿½Xï¿½^ï¿½[ï¿½gï¿½I");
+        // ï¿½^ï¿½Cï¿½gï¿½ï¿½ï¿½Ö–ß‚ï¿½
         SceneManager.LoadScene("TitleScene");
     }
 }

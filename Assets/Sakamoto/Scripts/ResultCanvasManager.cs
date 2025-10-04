@@ -20,8 +20,13 @@ public class ResultCanvasManager : MonoBehaviour
 
     public void Clear()
     {
-        clearPanel.SetActive(true);
+        //パネルを出す場合
+        /* clearPanel.SetActive(true);
+        GameManager.Instance.StageClear(); */
+
+        //パネルを出さずに直接次のステージへ
         GameManager.Instance.StageClear();
+        SceneManager.LoadScene("Sakamoto");
     }
 
     public void Dead()
