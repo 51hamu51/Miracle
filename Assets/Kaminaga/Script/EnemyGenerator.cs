@@ -3,28 +3,54 @@ using UnityEngine;
 public class EnemyGenerator : MonoBehaviour
 {
     private GameObject _enemyPrefab;
+    private GameObject _player;
     [SerializeField] private GameObject _spawnPositionLef;
     [SerializeField] private GameObject _spawnPositionRig;
-    private Vector3 _spawnPosition;
+    private Vector3 _spawnPositionCenter;
+    private Vector3 _spawnArea;
+    private Vector3 _spawnDirection;
+    private int _spawnTimer;
+    private int _spawnInterval;
     void Start()
     {
-        _enemyPrefab = GameObject.Find("ScareEnemy");
-        _spawnPosition = Vector3.zero;
+        _enemyPrefab = (GameObject)Resources.Load("ScareEnemy");
+        _player = GameObject.Find("Player");
+        _spawnPositionCenter = Vector3.zero;
+        _spawnArea = Vector3.zero;
+        _spawnTimer = 0;
+        _spawnInterval = 300;
     }
 
     void FixedUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.O))
+        _spawnTimer++;
+        if (_spawnTimer >= _spawnInterval)
         {
-            _spawnPosition = _spawnPositionLef.transform.position;
+            SetSpawnPoint();
+            _spawnArea = _spawnPositionCenter + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f, Random.Range(-5.0f, 5.0f));
+            Instantiate(_enemyPrefab, _spawnArea, Quaternion.identity);
+            _spawnTimer = 0;
         }
-        if(Input.GetKeyDown(KeyCode.P))
+        _spawnDirection = (_spawnArea - _spawnPositionCenter).normalized;
+
+        // 生成の位置までの方向を取得
+        Debug.DrawRay(_spawnPositionCenter, (_spawnArea - _spawnPositionCenter), Color.red);
+
+        // 生成の位置までエフェクトが移動した後に生成
+
+
+
+    }
+
+    void SetSpawnPoint()
+    {
+        if ((_player.transform.position - _spawnPositionLef.transform.position).magnitude > (_player.transform.position - _spawnPositionRig.transform.position).magnitude)
         {
-            _spawnPosition = _spawnPositionRig.transform.position;
+            _spawnPositionCenter = _spawnPositionLef.transform.position;
         }
-        if(Input.GetKeyDown(KeyCode.L))
+        else
         {
-            Instantiate(_enemyPrefab, _spawnPosition, Quaternion.identity);
+            _spawnPositionCenter = _spawnPositionRig.transform.position;
         }
     }
 }

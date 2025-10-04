@@ -5,6 +5,7 @@ public enum BossState
     Idle,
     Move,
     Attack,
+    Rush,
     Dead
 }
 
@@ -17,8 +18,10 @@ public class BossController : MonoBehaviour
     private float _moveSpeed;
     private BossState _currentState;
     public BossState CurrentState { get { return _currentState; } }
-    private int _counter;
+    private int _loopTimer;
+    private int _rushTimer;
     public bool _isAttack;
+    private int _attackCounter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,8 +31,10 @@ public class BossController : MonoBehaviour
         _moveDirection = Vector3.zero;
         _moveSpeed = 0.01f;
         _currentState = BossState.Move;
-        _counter = 0;
+        _loopTimer = 0;
+        _rushTimer = 0;
         _isAttack = false;
+        _attackCounter = 0;
     }
 
     // Update is called once per frame
@@ -42,7 +47,7 @@ public class BossController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            _currentState = BossState.Move;
+            _currentState = BossState.Rush;
         }
 
 
@@ -53,28 +58,57 @@ public class BossController : MonoBehaviour
                 _moveDirection = Vector3.zero;
                 break;
             case BossState.Move:
-                _counter++;
+                _loopTimer++;
                 _myMaterial.color = Color.green;
                 _moveDirection = _playerDistance.normalized;
 
-                if (_counter == 100)
+                if (_loopTimer == 100)
                 {
                     _isAttack = true;
-                    _counter = 0;
+                    _loopTimer = 0;
                     Debug.Log("�U��!");
-                    _currentState = BossState.Attack;
+                    if(_attackCounter == 3)
+                    {
+                        _currentState = BossState.Rush;
+                        _attackCounter = 0;
+                    }
+                    else
+                    {
+                        _currentState = BossState.Attack;
+                    }
                 }
                 break;
             case BossState.Attack:
                 _myMaterial.color = Color.red;
-                _counter++;
-                if (_counter == 50)
+                _loopTimer++;
+                if (_loopTimer == 50)
                 {
                     _isAttack = false;
-                    _counter = 0;
+                    _attackCounter++;
+                    _loopTimer = 0;
                     _currentState = BossState.Move;
                 }
                 break;
+            case BossState.Rush:
+                _rushTimer++;
+                _myMaterial.color = Color.blue;
+
+                if (_rushTimer < 100)
+                {
+                    _moveDirection = -_playerDistance.normalized;
+                }
+                else
+                {
+                    _moveDirection = _playerDistance.normalized;
+                    _moveSpeed = 0.30f;
+                }
+                if(_rushTimer >= 120)
+                {
+                    _rushTimer = 0;
+                    _moveSpeed = 0.01f;
+                    _currentState = BossState.Move;
+                }
+                    break;
             case BossState.Dead:
                 Destroy(gameObject);
                 break;
