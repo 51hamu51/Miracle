@@ -30,6 +30,7 @@ public class EnemyController : MonoBehaviour
         if (_isScared)
         {
             _moveDirection = -_playerDistance.normalized * 2.0f;
+            _moveDirection.y = 0.0f;
         }
         else
         {
