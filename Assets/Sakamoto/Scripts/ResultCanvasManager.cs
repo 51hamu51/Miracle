@@ -6,6 +6,8 @@ public class ResultCanvasManager : MonoBehaviour
     public GameObject clearPanel;
     public GameObject deadPanel;
 
+    public PlayerManager playerManager;
+
     void Start()
     {
         clearPanel.SetActive(false);
@@ -25,8 +27,19 @@ public class ResultCanvasManager : MonoBehaviour
         GameManager.Instance.StageClear(); */
 
         //パネルを出さずに直接次のステージへ
-        GameManager.Instance.StageClear();
-        SceneManager.LoadScene("Sakamoto");
+        if (GameManager.Instance.clearStageNum < 2)
+        {
+            GameManager.Instance.StageClear();
+            SceneManager.LoadScene("Sakamoto");
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            playerManager.Eat();
+            Debug.Log("EAAAAAAAAAAAAT");
+        }
+
+
     }
 
     public void Dead()

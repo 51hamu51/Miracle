@@ -33,10 +33,22 @@ public class PlayerManager : MonoBehaviour
     private BossController bossController;
     private EnemyController enemyController;
 
+    public bool IsRotating;
+    public bool IsEating;
+
+    public Transform cameraTransform;
+
+    [SerializeField] private float eatMoveSpeed;
+
     /// <summary>
     /// ボスを倒したときの回復ボーナス(倍率)
     /// </summary>
     [SerializeField] private float bossBonus;
+
+    // 目標の角度
+    private Quaternion targetRotation;
+    // 回転速度（度/秒）
+    public float rotateSpeed = 90f;
 
     void Start()
     {
@@ -47,10 +59,47 @@ public class PlayerManager : MonoBehaviour
         IsDead = false;
         IsClear = false;
         IsDrain = false;
+        IsRotating = false;
+        IsEating = false;
     }
 
     void Update()
     {
+        if (IsRotating)
+        { // 目標方向を計算
+            Vector3 direction = (cameraTransform.position - transform.position).normalized;
+
+            //  目標方向に向かって回転
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                Quaternion.LookRotation(direction),
+                rotateSpeed * Time.unscaledDeltaTime
+            );
+
+            // 回転終了判定
+            if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(direction)) < 0.01f)
+            {
+                transform.rotation = Quaternion.LookRotation(direction);
+                IsRotating = false;
+                IsEating = true; // 回転終わったら移動開始
+            }
+        }
+
+
+        if (IsEating && cameraTransform != null)
+        {
+            Vector3 direction = (cameraTransform.position - transform.position).normalized;
+            // 目標方向に進む
+            transform.position += direction * eatMoveSpeed * Time.unscaledDeltaTime;
+
+            //目標に到達したら停止
+            if (Vector3.Distance(transform.position, cameraTransform.position) < 0.1f)
+            {
+                IsEating = false;
+            }
+        }
+
+
         if (IsDead || IsClear)
         {
             return;
@@ -93,6 +142,7 @@ public class PlayerManager : MonoBehaviour
     void UpdatePlayerScale()
     {
         float scaleRate = (float)playerHP / playerMaxHP;
+        scaleRate = Mathf.Clamp(scaleRate, 0f, 1f);
         transform.localScale = initialScale * scaleRate;
     }
 
@@ -144,5 +194,10 @@ public class PlayerManager : MonoBehaviour
         playerHP = Mathf.Max(playerHP - amount, 0);
         Debug.Log("ダメージ！HP: " + playerHP);
         UpdatePlayerScale();
+    }
+
+    public void Eat()
+    {
+        IsRotating = true;
     }
 }
