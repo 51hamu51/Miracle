@@ -15,11 +15,17 @@ public class Filter : MonoBehaviour
             string sceneName = SceneManager.GetActiveScene().name;
 
             if (sceneName == "Stage1")
-            bloom.threshold.value = 0f;
-            bloom.intensity.value = 0.1f;
-
+            {
+                bloom.threshold.value = 0f;
+                bloom.intensity.value = 0.1f;
+                bloom.scatter.value = 0f;
+                bloom.dirtIntensity.value = 15f;
+            }
+            
             else if (sceneName == "Stage2")
-                bloom.
+            {
+                
+            }
         }   
 
     }
