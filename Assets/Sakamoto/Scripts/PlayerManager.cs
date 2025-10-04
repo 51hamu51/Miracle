@@ -9,6 +9,12 @@ public class PlayerManager : MonoBehaviour
     private float timer;
     [SerializeField] private int recoverAmount;
 
+    [SerializeField] private float drainTime;
+    private float drainTimer;
+    private bool IsDrain;
+
+    public ResultCanvasManager resultCanvasManager;
+
     private bool IsDead;
     private bool IsClear;
 
@@ -22,6 +28,7 @@ public class PlayerManager : MonoBehaviour
         UpdatePlayerScale();
         IsDead = false;
         IsClear = false;
+        IsDrain = false;
     }
 
     void Update()
@@ -45,13 +52,23 @@ public class PlayerManager : MonoBehaviour
         if (playerHP <= 0)
         {
             IsDead = true;
-            GameManager.Instance.Dead();
+            resultCanvasManager.Dead();
         }
 
         if (playerHP >= playerMaxHP)
         {
             IsClear = true;
-            GameManager.Instance.StageClear();
+            resultCanvasManager.Clear();
+        }
+
+        if (IsDrain)
+        {
+            drainTimer += Time.deltaTime;
+            if (drainTimer >= drainTime)
+            {
+                drainTimer = 0;
+                RecoverHP(recoverAmount);
+            }
         }
     }
 
@@ -65,7 +82,15 @@ public class PlayerManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            RecoverHP(recoverAmount);
+            IsDrain = true;
+        }
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            IsDrain = false;
+            drainTimer = 0;
         }
     }
 
