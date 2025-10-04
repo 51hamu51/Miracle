@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ResultCanvasManager : MonoBehaviour
 {
@@ -20,10 +21,16 @@ public class ResultCanvasManager : MonoBehaviour
     public void Clear()
     {
         clearPanel.SetActive(true);
+        GameManager.Instance.StageClear();
     }
 
     public void Dead()
     {
         deadPanel.SetActive(true);
+    }
+
+    public void NextScene()
+    {
+        SceneManager.LoadScene("Sakamoto");
     }
 }
