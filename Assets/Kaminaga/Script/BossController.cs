@@ -23,6 +23,10 @@ public class BossController : MonoBehaviour
     private int _rushTimer;
     public bool _isAttack;
     private int _attackCounter;
+    private const int _maxAttackCount = 3;
+    private const int _attackDuration = 50;
+    private const int _rushDuration = 120;
+    private const int _waitDuration = 100;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -66,12 +70,12 @@ public class BossController : MonoBehaviour
                 _myMaterial.color = Color.green;
                 _moveDirection = _playerDistance.normalized;
 
-                if (_loopTimer == 100)
+                if (_loopTimer == _waitDuration)
                 {
                     _isAttack = true;
                     _loopTimer = 0;
                     Debug.Log("�U��!");
-                    if(_attackCounter == 3)
+                    if(_attackCounter == _maxAttackCount)
                     {
                         _currentState = BossState.Rush;
                         _attackCounter = 0;
@@ -85,7 +89,7 @@ public class BossController : MonoBehaviour
             case BossState.Attack:
                 _myMaterial.color = Color.red;
                 _loopTimer++;
-                if (_loopTimer == 50)
+                if (_loopTimer == _attackDuration)
                 {
                     _isAttack = false;
                     _attackCounter++;
@@ -97,7 +101,7 @@ public class BossController : MonoBehaviour
                 _rushTimer++;
                 _myMaterial.color = Color.blue;
 
-                if (_rushTimer < 100)
+                if (_rushTimer < _waitDuration)
                 {
                     _moveDirection = -_playerDistance.normalized;
                 }
@@ -106,7 +110,7 @@ public class BossController : MonoBehaviour
                     _moveDirection = _playerDistance.normalized;
                     _moveSpeed = 0.30f;
                 }
-                if(_rushTimer >= 120)
+                if(_rushTimer >= _rushDuration)
                 {
                     _rushTimer = 0;
                     _moveSpeed = 0.01f;
