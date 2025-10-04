@@ -43,7 +43,11 @@ public class PlayerManager : MonoBehaviour
     public bool IsRotating2;
     public bool IsEating;
     public bool IsMoving;
+
     public bool IsFading;
+
+    public bool IsRed;
+
 
     public Filter filter;
 
@@ -79,10 +83,14 @@ public class PlayerManager : MonoBehaviour
         IsRotating2 = false;
         IsEating = false;
         IsMoving = false;
+
         IsFading = false;
 
         // ↓これは使える、分からん
          gameEnd.StartFadeIn();
+
+        IsRed = false;
+
     }
 
     void Update()
@@ -90,9 +98,15 @@ public class PlayerManager : MonoBehaviour
         
 
         if (IsRotating)
-        {
-            // 目標方向を計算
-            filter.RedScreen();
+
+
+        { // 目標方向を計算
+            if (!IsRed)
+            {
+                filter.RedScreen();
+                IsRed = true;
+            }
+
             Vector3 direction = (startPosition.position - transform.position).normalized;
 
             //  目標方向に向かって回転
