@@ -29,14 +29,18 @@ public class PlayerManager : MonoBehaviour
     private bool IsDead;
     private bool IsClear;
 
-    public bool CanMove => !IsDead;
+    public bool CanMove => !IsDead && !IsRotating && !IsRotating2 && !IsEating && !IsMoving;
 
     private Vector3 initialScale; // 初期サイズを保持
     private BossController bossController;
     private EnemyController enemyController;
 
     public bool IsRotating;
+    public bool IsRotating2;
     public bool IsEating;
+    public bool IsMoving;
+
+    public Transform startPosition;
 
     public Transform cameraTransform;
 
@@ -62,12 +66,56 @@ public class PlayerManager : MonoBehaviour
         IsClear = false;
         IsDrain = false;
         IsRotating = false;
+        IsRotating2 = false;
         IsEating = false;
+        IsMoving = false;
     }
 
     void Update()
     {
         if (IsRotating)
+        { // 目標方向を計算
+            Vector3 direction = (startPosition.position - transform.position).normalized;
+
+            //  目標方向に向かって回転
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                Quaternion.LookRotation(direction),
+                rotateSpeed * Time.unscaledDeltaTime
+            );
+
+            // 回転終了判定
+            if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(direction)) < 0.01f)
+            {
+                transform.rotation = Quaternion.LookRotation(direction);
+                IsRotating = false;
+                IsMoving = true; // 回転終わったら移動開始
+            }
+        }
+
+
+        if (IsMoving && startPosition != null)
+        {
+            Vector3 direction = (startPosition.position - transform.position).normalized;
+            // 目標方向に進む
+            transform.position += direction * eatMoveSpeed * Time.unscaledDeltaTime;
+
+            //目標に到達したら停止
+            if (Vector3.Distance(transform.position, startPosition.position) < 0.1f)
+            {
+                IsMoving = false;
+                IsRotating2 = true;
+            }
+        }
+
+
+
+
+
+
+
+
+        if (IsRotating2)
         { // 目標方向を計算
             Vector3 direction = (cameraTransform.position - transform.position).normalized;
 
@@ -82,7 +130,7 @@ public class PlayerManager : MonoBehaviour
             if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(direction)) < 0.01f)
             {
                 transform.rotation = Quaternion.LookRotation(direction);
-                IsRotating = false;
+                IsRotating2 = false;
                 IsEating = true; // 回転終わったら移動開始
             }
         }
