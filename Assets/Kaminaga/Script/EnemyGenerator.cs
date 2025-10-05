@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum EnemyGeneratorState
+{
+    Easy,
+    Normal,
+    Hard,
+}
 public class EnemyGenerator : MonoBehaviour
 {
     private GameObject _enemyPrefab;
@@ -11,12 +17,16 @@ public class EnemyGenerator : MonoBehaviour
     private Vector3 _spawnArea;
     private Vector3 _spawnDirection;
     private int _spawnTimer;
-    private const int _spawnInterval = 300;
-    private const int _effectMoveDuration = 100; // �G�t�F�N�g�������ʒu�Ɉړ����鎞��
-    private const int _effectStopDuration = 25; // �G�t�F�N�g���~�܂鎞��
+    private const int kEasyInterval = 300; // ��Փx�C�[�W�[�̐����Ԋu
+    private const int kNormalInterval = 200; // ��Փx�m�[�}���̐����Ԋu
+    private const int kHardInterval = 100; // ��Փx�n�[�h�̐����Ԋu
+    private const int kEffectMoveDuration = 100; // �G�t�F�N�g�������ʒu�Ɉړ����鎞��
+    private const int kEffectStopDuration = 25; // �G�t�F�N�g���~�܂鎞��
     private int _effectStopTimer;
     private bool _isSpawning;
     private bool _isSpawnRight;
+    private EnemyGeneratorState _currentState;
+    private int _spawnInterval;
     void Start()
     {
         _enemyPrefab = (GameObject)Resources.Load("ScareEnemy");
@@ -29,10 +39,25 @@ public class EnemyGenerator : MonoBehaviour
         _effectStopTimer = 0;
         _isSpawning = false;
         _isSpawnRight = false;
+        _currentState = EnemyGeneratorState.Easy;
+        _spawnInterval = kEasyInterval;
     }
 
     void FixedUpdate()
     {
+        // ��Փx�ɉ����Đ����Ԋu��ύX
+        switch (_currentState)
+        {
+            case EnemyGeneratorState.Easy:
+                _spawnInterval = kEasyInterval;
+                break;
+            case EnemyGeneratorState.Normal:
+                _spawnInterval = kNormalInterval;
+                break;
+            case EnemyGeneratorState.Hard:
+                _spawnInterval = kHardInterval;
+                break;
+        }
         if (!_isSpawning)
         {
             _spawnTimer++;
@@ -55,10 +80,9 @@ public class EnemyGenerator : MonoBehaviour
 
 
         // �����̈ʒu�܂ł̕������擾
-        _spawnDirection = (_spawnArea - _spawnPositionCenter) / _effectMoveDuration;
+        _spawnDirection = (_spawnArea - _spawnPositionCenter) / kEffectMoveDuration;
         if (_isSpawning)
         {
-            Debug.DrawRay(_spawnPositionCenter, (_spawnArea - _spawnPositionCenter), Color.red);
             _spawnEffect.transform.position += _spawnDirection;
         }
         else
@@ -72,7 +96,7 @@ public class EnemyGenerator : MonoBehaviour
         {
             _spawnEffect.transform.position = _spawnArea; // �덷���Ȃ������߂ɒ��ڑ��
             _effectStopTimer++;
-            if (_effectStopTimer > _effectStopDuration) // �G�t�F�N�g���~�܂��Ă��班���҂�
+            if (_effectStopTimer > kEffectStopDuration) // �G�t�F�N�g���~�܂��Ă��班���҂�
             {
                 _effectStopTimer = 0;
                 Instantiate(_enemyPrefab, _spawnArea, Quaternion.identity);

@@ -125,6 +125,9 @@ public class OptionSystem : MonoBehaviour
         // ----------------------------------------------------
 
         // ���ݑI�𒆂̍��ڂ��擾
+        if (currentIndex == 0) {
+            return;
+        }
         Selectable currentItem = menuItems[currentIndex];
         // �I�����ڂ�Slider�̏ꍇ�A���E�L�[�Œl��ύX����
         Slider currentSlider = currentItem as Slider;

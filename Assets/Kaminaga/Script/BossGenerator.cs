@@ -16,11 +16,15 @@ public class BossGenerator : MonoBehaviour
     private Vector3 _spawnDirection;
     private int _spawnTimer;
     private int _spawnInterval;
-    private int _effectMoveDuration; // エフェクトが生成位置に移動する時間
+    private int _kEffectMoveDuration; // エフェクトが生成位置に移動する時間
     private int _effectStopDuration; // エフェクトが止まる時間
     private int _effectStopTimer;
     private bool _isSpawning;
     private BossGeneratorState _currentState;
+    private const int kEasyInterval = 600;
+    private const int kNormalInterval = 400;
+    private const int kHardInterval = 200;
+    private const int kEffectMoveDuration = 100;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,8 +33,8 @@ public class BossGenerator : MonoBehaviour
         _spawnArea = Vector3.zero;
         _spawnDirection = Vector3.zero;
         _spawnTimer = 0;
-        _spawnInterval = 600;
-        _effectMoveDuration = 100; // エフェクトが生成位置に移動する時間
+        _spawnInterval = kEasyInterval;
+        _kEffectMoveDuration = kEffectMoveDuration; // エフェクトが生成位置に移動する時間
         _effectStopDuration = 25;
         _effectStopTimer = 0;
         _isSpawning = false;
@@ -44,13 +48,13 @@ public class BossGenerator : MonoBehaviour
         switch (_currentState)
         {
             case BossGeneratorState.Easy:
-                _spawnInterval = 600;
+                _spawnInterval = kEasyInterval;
                 break;
             case BossGeneratorState.Normal:
-                _spawnInterval = 400;
+                _spawnInterval = kNormalInterval;
                 break;
             case BossGeneratorState.Hard:
-                _spawnInterval = 200;
+                _spawnInterval = kHardInterval;
                 break;
         }
         if (!_isSpawning)
@@ -64,7 +68,7 @@ public class BossGenerator : MonoBehaviour
             _spawnTimer = 0;
         }
         // 生成の位置までの方向を取得
-        _spawnDirection = (_spawnArea - _spawnPosition.transform.position) / _effectMoveDuration;
+        _spawnDirection = (_spawnArea - _spawnPosition.transform.position) / _kEffectMoveDuration;
         if (_isSpawning)
         {
             _spawnEffect.transform.position += _spawnDirection;

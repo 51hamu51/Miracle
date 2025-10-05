@@ -11,6 +11,8 @@ public class StageTextScript : MonoBehaviour
 
     void Update()
     {
-        stageText.text = "Stage:" + (GameManager.Instance.clearStageNum + 1);
+        
+            stageText.text = "Stage:" + (GameManager.Instance?.clearStageNum + 1);
+        
     }
 }
