@@ -103,7 +103,18 @@ public class EnemyGenerator : MonoBehaviour
             if (_effectStopTimer > kEffectStopDuration) // ・ｽG・ｽt・ｽF・ｽN・ｽg・ｽ・ｽ・ｽ~・ｽﾜゑｿｽ・ｽﾄゑｿｽ・ｽ迴ｭ・ｽ・ｽ・ｽﾒゑｿｽ
             {
                 _effectStopTimer = 0;
-                Instantiate(_hopperPrefab, _spawnArea, Quaternion.identity);
+                if(GameManager.Instance.clearStageNum == 0)
+                {
+                    Instantiate(_hopperPrefab, _spawnArea, Quaternion.identity);
+                }
+                else if (GameManager.Instance.clearStageNum == 1)
+                {
+                    Instantiate(_cowPrefab, _spawnArea, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(_elephantPrefab, _spawnArea, Quaternion.identity);
+                }
                 _isSpawning = false;
             }
         }
