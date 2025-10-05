@@ -250,7 +250,7 @@ public class PlayerManager : MonoBehaviour
     {
         float scaleRate = (float)playerHP / playerMaxHP;
         scaleRate = Mathf.Clamp(scaleRate, 0f, 1f);
-        transform.localScale = initialScale * scaleRate;
+        transform.localScale = initialScale * scaleRate * 0.5f;
     }
 
     void OnCollisionEnter(Collision collision)
