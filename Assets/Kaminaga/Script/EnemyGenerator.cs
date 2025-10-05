@@ -109,10 +109,12 @@ public class EnemyGenerator : MonoBehaviour
                 }
                 else if (GameManager.Instance.clearStageNum == 1)
                 {
+                    _spawnArea.y += 0.5f;
                     Instantiate(_cowPrefab, _spawnArea, Quaternion.identity);
                 }
                 else
                 {
+                    _spawnArea.y += 0.5f;
                     Instantiate(_elephantPrefab, _spawnArea, Quaternion.identity);
                 }
                 _isSpawning = false;

@@ -23,6 +23,7 @@ public class WASD : MonoBehaviour
     void Update()
     {
         if (!_playerManager.CanMove) {
+            _velocity = Vector3.zero;
             return;
         }
 
