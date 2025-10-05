@@ -299,7 +299,7 @@ public class PlayerManager : MonoBehaviour
         gameEndSE.Play();
 
         TitleManager.Instance.StopGameBGM();
-        // ↓これは使えない、分からん
+        // ゲーム終了時のエフェクト
         gameEnd.gameObject.SetActive(true);
         gameEnd.StartFadeIn();
     }

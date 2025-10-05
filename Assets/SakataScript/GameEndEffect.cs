@@ -10,7 +10,6 @@ public class GameEndEffect : MonoBehaviour
     [SerializeField] Image imgEnd;  // 終了画像
     [SerializeField] float fadeDuration = 2.0f;// 透過率が0から1に変化するまでの秒数
     [SerializeField] float scaleDuration = 2.0f;// 拡大率が0から1に変化するまでの秒数
-    [SerializeField] private PlayerManager player;// プレイヤーを参照
 
     // 経過時間
     private float elapsedTime = 0f;
