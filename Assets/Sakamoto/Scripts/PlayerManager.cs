@@ -143,7 +143,7 @@ public class PlayerManager : MonoBehaviour
 
         if (IsMoving && startPosition != null)
         {
-            Debug.Log("Move");
+            //Debug.Log("Move");
             Vector3 direction = (startPosition.position - transform.position).normalized;
             // 目標方向に進む
             transform.position += direction * eatMoveSpeed * Time.unscaledDeltaTime;
