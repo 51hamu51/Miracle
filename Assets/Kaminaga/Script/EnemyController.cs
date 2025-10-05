@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour
         }
         _lookPlayer = _playerDistance.normalized;
         _lookPlayer.y = 0.0f;
-        transform.rotation = Quaternion.LookRotation(_lookPlayer);
+        transform.rotation = Quaternion.LookRotation(_lookPlayer) * Quaternion.AngleAxis(270.0f,new Vector3(0.0f,1.0f,0.0f));
         transform.position += _moveDirection * _moveSpeed;
     }
 

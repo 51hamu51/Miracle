@@ -8,20 +8,22 @@ public enum EnemyGeneratorState
 }
 public class EnemyGenerator : MonoBehaviour
 {
-    private GameObject _enemyPrefab;
+    private GameObject _hopperPrefab;
+    private GameObject _cowPrefab;
+    private GameObject _elephantPrefab;
     private GameObject _player;
-    [SerializeField] private GameObject _spawnPositionLef; // ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½Ìï¿½ï¿½Wï¿½æ“¾ï¿½p
-    [SerializeField] private GameObject _spawnPositionRig; // ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½Ìï¿½ï¿½Wï¿½æ“¾ï¿½p    
-    private GameObject _spawnEffect; // ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½ï¿½Ç‚ï¿½ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½p
+    [SerializeField] private GameObject _spawnPositionLef; // ¶¬ˆÊ’u‚ÌÀ•Wæ“¾—p
+    [SerializeField] private GameObject _spawnPositionRig; // ¶¬ˆÊ’u‚ÌÀ•Wæ“¾—p    
+    private GameObject _spawnEffect; // ¶¬ˆÊ’u‚ğ’Ç‚¤ƒGƒtƒFƒNƒg—p
     private Vector3 _spawnPositionCenter;
     private Vector3 _spawnArea;
     private Vector3 _spawnDirection;
     private int _spawnTimer;
-    private const int kEasyInterval = 300; // ï¿½ï¿½Õ“xï¿½Cï¿½[ï¿½Wï¿½[ï¿½Ìï¿½ï¿½ï¿½ï¿½ÔŠu
-    private const int kNormalInterval = 200; // ï¿½ï¿½Õ“xï¿½mï¿½[ï¿½}ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ÔŠu
-    private const int kHardInterval = 100; // ï¿½ï¿½Õ“xï¿½nï¿½[ï¿½hï¿½Ìï¿½ï¿½ï¿½ï¿½ÔŠu
-    private const int kEffectMoveDuration = 100; // ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½ÉˆÚ“ï¿½ï¿½ï¿½ï¿½éï¿½ï¿½
-    private const int kEffectStopDuration = 25; // ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½~ï¿½Ü‚éï¿½ï¿½
+    private const int kEasyInterval = 300; // E½E½Õ“xE½CE½[E½WE½[E½Ìï¿½E½E½E½ÔŠu
+    private const int kNormalInterval = 200; // E½E½Õ“xE½mE½[E½}E½E½E½Ìï¿½E½E½E½ÔŠu
+    private const int kHardInterval = 100; // E½E½Õ“xE½nE½[E½hE½Ìï¿½E½E½E½ÔŠu
+    private const int kEffectMoveDuration = 100; // E½GE½tE½FE½NE½gE½E½E½E½E½E½E½Ê’uE½ÉˆÚ“ï¿½E½E½E½éï¿½E½
+    private const int kEffectStopDuration = 25; // E½GE½tE½FE½NE½gE½E½E½~E½Ü‚éE½E½
     private int _effectStopTimer;
     private bool _isSpawning;
     private bool _isSpawnRight;
@@ -29,7 +31,9 @@ public class EnemyGenerator : MonoBehaviour
     private int _spawnInterval;
     void Start()
     {
-        _enemyPrefab = (GameObject)Resources.Load("ScareEnemy");
+        _hopperPrefab = (GameObject)Resources.Load("Enemy_Hopper");
+        _cowPrefab = (GameObject)Resources.Load("Enemy_Cow");
+        _elephantPrefab = (GameObject)Resources.Load("Enemy_Elephant");
         _player = GameObject.FindWithTag("Player");
         _spawnEffect = GameObject.Find("SpawnEffect");
         _spawnPositionCenter = _spawnPositionLef.transform.position;
@@ -45,7 +49,7 @@ public class EnemyGenerator : MonoBehaviour
 
     void FixedUpdate()
     {
-        // ï¿½ï¿½Õ“xï¿½É‰ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ÔŠuï¿½ï¿½ÏX
+        // E½E½Õ“xE½É‰ï¿½E½E½E½Äï¿½E½E½E½ÔŠuE½E½ÏX
         switch (_currentState)
         {
             case EnemyGeneratorState.Easy:
@@ -79,7 +83,7 @@ public class EnemyGenerator : MonoBehaviour
         }
 
 
-        // ï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Ü‚Å‚Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
+        // E½E½E½E½E½ÌˆÊ’uE½Ü‚Å‚Ì•ï¿½E½E½E½E½E½æ“¾
         _spawnDirection = (_spawnArea - _spawnPositionCenter) / kEffectMoveDuration;
         if (_isSpawning)
         {
@@ -87,19 +91,19 @@ public class EnemyGenerator : MonoBehaviour
         }
         else
         {
-            // ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½ğ’†Sï¿½É–ß‚ï¿½
+            // E½GE½tE½FE½NE½gE½ğ’ESE½É–ß‚ï¿½
             _spawnEffect.transform.position = _spawnPositionCenter;
         }
 
-        // ï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Ü‚ÅƒGï¿½tï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½
+        // E½E½E½E½E½ÌˆÊ’uE½Ü‚ÅƒGE½tE½FE½NE½gE½E½E½Ú“ï¿½E½E½E½E½E½E½Éï¿½E½E½
         if (_isSpawning && (_spawnArea - _spawnEffect.transform.position).magnitude < 0.1f)
         {
-            _spawnEffect.transform.position = _spawnArea; // ï¿½ë·ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚É’ï¿½ï¿½Ú‘ï¿½ï¿½
+            _spawnEffect.transform.position = _spawnArea; // E½E·E½E½E½È‚ï¿½E½E½E½E½E½ß‚É’ï¿½E½Ú‘ï¿½E½
             _effectStopTimer++;
-            if (_effectStopTimer > kEffectStopDuration) // ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½~ï¿½Ü‚ï¿½ï¿½Ä‚ï¿½ï¿½ç­ï¿½ï¿½ï¿½Ò‚ï¿½
+            if (_effectStopTimer > kEffectStopDuration) // E½GE½tE½FE½NE½gE½E½E½~E½Ü‚ï¿½E½Ä‚ï¿½E½ç­E½E½E½Ò‚ï¿½
             {
                 _effectStopTimer = 0;
-                Instantiate(_enemyPrefab, _spawnArea, Quaternion.identity);
+                Instantiate(_hopperPrefab, _spawnArea, Quaternion.identity);
                 _isSpawning = false;
             }
         }
@@ -110,7 +114,7 @@ public class EnemyGenerator : MonoBehaviour
 
     void SetSpawnPoint()
     {
-        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ô‹ß‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½ğ’†Sï¿½Éİ’ï¿½
+        // E½vE½E½E½CE½E½E½[E½E½E½E½E½Ô‹ß‚ï¿½E½E½E½E½E½Ê’uE½ğ’ESE½Éİ’ï¿½
         if ((_player.transform.position - _spawnPositionLef.transform.position).magnitude > (_player.transform.position - _spawnPositionRig.transform.position).magnitude)
         {
             _spawnPositionCenter = _spawnPositionRig.transform.position;
