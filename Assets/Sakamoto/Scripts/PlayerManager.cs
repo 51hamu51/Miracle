@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 
 public class PlayerManager : MonoBehaviour
@@ -64,6 +65,12 @@ public class PlayerManager : MonoBehaviour
 
 
     [SerializeField] private GameEndEffect gameEnd;
+
+    [SerializeField] private AudioSource hitSE;
+    [SerializeField] private AudioSource eatSE;
+    [SerializeField] private AudioSource deadSE;
+    [SerializeField] private AudioSource gameEndSE;
+    [SerializeField] private AudioSource lastEatSE;
 
     // 目標の角度
     private Quaternion targetRotation;
@@ -166,6 +173,7 @@ public class PlayerManager : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(direction);
                 IsRotating2 = false;
                 IsEating = true; // 回転終わったら移動開始
+                lastEatSE.Play();
             }
         }
 
@@ -204,6 +212,7 @@ public class PlayerManager : MonoBehaviour
         if (playerHP <= 0)
         {
             IsDead = true;
+            deadSE.Play();
             resultCanvasManager.Dead();
         }
 
@@ -236,7 +245,8 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             IsDrain = true;
-
+            hitSE.Play();
+            Debug.Log("hitSE再生");
             bossController = collision.gameObject.GetComponent<BossController>();
             enemyController = collision.gameObject.GetComponent<EnemyController>();
             // スクリプトが存在して、かつIsAttackがtrueなら
@@ -267,7 +277,8 @@ public class PlayerManager : MonoBehaviour
             playerHP = Mathf.Min(playerHP + amount, playerMaxHP);
             enemyController.EnemyDead();
         }
-
+        eatSE.Play();
+        Debug.Log("eatSE再生");
         Debug.Log("回復！HP: " + playerHP);
         IsDrain = false;
         drainTimer = 0;
@@ -284,8 +295,13 @@ public class PlayerManager : MonoBehaviour
     public void Eat()
     {
         IsRotating = true;
+
+        gameEndSE.Play();
+
+        TitleManager.Instance.StopGameBGM();
         // ↓これは使えない、分からん
-        // gameEnd.StartFadeIn();
+        gameEnd.gameObject.SetActive(true);
+        gameEnd.StartFadeIn();
     }
 
     private IEnumerator CallAfterDelay()
@@ -298,6 +314,7 @@ public class PlayerManager : MonoBehaviour
     {
         GameManager.Instance.IsGameClear = true;
         GameManager.Instance.GameReset();
+        TitleManager.Instance.ChangeTitleBGM();
         SceneManager.LoadScene("TitleScene");
     }
 }

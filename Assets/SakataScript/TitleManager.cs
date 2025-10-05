@@ -17,6 +17,8 @@ public class TitleManager : MonoBehaviour
     public Sprite titleBackSprite2;
 
     // �y�ǉ��zAudioSource�R���|�[�l���g�ւ̎Q��
+    public AudioSource bgmTitleSource;
+    public AudioSource bgmGameSource;
     public AudioSource audioSource;
     // �y�ǉ��z�J�[�\���ړ�SE
     public AudioClip moveSE;
@@ -51,6 +53,8 @@ public class TitleManager : MonoBehaviour
         //{
         //    cursorImage.gameObject.SetActive(false);
         //}
+
+        bgmTitleSource.Play();
 
         // �����I���{�^����ݒ肵�A�J�[�\����z�u
         if (menuButtons.Length > 0)
@@ -164,6 +168,9 @@ public class TitleManager : MonoBehaviour
 
     public void StartGame()
     {
+        bgmTitleSource.Stop();
+        bgmGameSource.Play();
+
         Debug.Log("�Q�[���X�^�[�g�I");
         // (�f�o�b�O�F�I�v�V�����ݒ�V�[���֑J��)
         SceneManager.LoadScene("Sakamoto");
@@ -268,5 +275,16 @@ public class TitleManager : MonoBehaviour
             titleSceneManager.logoImage.sprite = titleSprite;
             titleSceneManager.titleBackImage.sprite = titleBackSprite;
         }
+    }
+
+    public void ChangeTitleBGM()
+    {
+        bgmGameSource.Stop();
+        bgmTitleSource.Play();
+    }
+
+    public void StopGameBGM()
+    {
+        bgmGameSource.Stop();
     }
 }

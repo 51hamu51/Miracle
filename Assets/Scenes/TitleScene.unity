@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 10666291}
   - component: {fileID: 10666292}
   - component: {fileID: 10666293}
+  - component: {fileID: 10666294}
   m_Layer: 0
   m_Name: TitleManager
   m_TagString: Untagged
@@ -171,9 +172,11 @@ MonoBehaviour:
   titleSprite2: {fileID: 21300000, guid: 79494814459226642803f02851f7d3b1, type: 3}
   titleBackSprite: {fileID: 21300000, guid: 26f26e33a4faceb429207ed2636cd9fc, type: 3}
   titleBackSprite2: {fileID: 21300000, guid: 40b44ff8868b276449b150276d5a7f01, type: 3}
+  bgmTitleSource: {fileID: 10666291}
+  bgmGameSource: {fileID: 10666294}
   audioSource: {fileID: 10666292}
-  moveSE: {fileID: 8300000, guid: 2d25700967decfe4fbbd87d16c46365f, type: 3}
-  decideSE: {fileID: 8300000, guid: f970af1f3b1dc554e88524f64657bffe, type: 3}
+  moveSE: {fileID: 8300000, guid: 799dbea417d48504d92582aed9704aef, type: 3}
+  decideSE: {fileID: 8300000, guid: d75283ae9f8eae04da828475d8718c60, type: 3}
   menuButtons:
   - {fileID: 1811362812}
   - {fileID: 546838228}
@@ -191,8 +194,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2200795414530252707, guid: 4b3a68559f2a32347ae7d6b9f0c882f6, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 409e52ec5913d354a9e51802b103a6ba, type: 3}
-  m_PlayOnAwake: 1
+  m_Resource: {fileID: 8300000, guid: 3f86d49f4aad0424d853af3ec549d82d, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -288,7 +291,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7323623116393751927, guid: 4b3a68559f2a32347ae7d6b9f0c882f6, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: f970af1f3b1dc554e88524f64657bffe, type: 3}
+  m_Resource: {fileID: 8300000, guid: 799dbea417d48504d92582aed9704aef, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -385,11 +388,108 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7323623116393751927, guid: 4b3a68559f2a32347ae7d6b9f0c882f6, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 2d25700967decfe4fbbd87d16c46365f, type: 3}
+  m_Resource: {fileID: 8300000, guid: d75283ae9f8eae04da828475d8718c60, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &10666294
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10666288}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -2200795414530252707, guid: 4b3a68559f2a32347ae7d6b9f0c882f6, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 99e00391d2d9f0647a7a923de164f5ad, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -788,7 +888,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7323623116393751927, guid: 4b3a68559f2a32347ae7d6b9f0c882f6, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: f970af1f3b1dc554e88524f64657bffe, type: 3}
+  m_Resource: {fileID: 8300000, guid: d75283ae9f8eae04da828475d8718c60, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1478,7 +1578,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7323623116393751927, guid: 4b3a68559f2a32347ae7d6b9f0c882f6, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 2d25700967decfe4fbbd87d16c46365f, type: 3}
+  m_Resource: {fileID: 8300000, guid: 799dbea417d48504d92582aed9704aef, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

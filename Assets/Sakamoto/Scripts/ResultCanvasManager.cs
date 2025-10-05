@@ -56,6 +56,7 @@ public class ResultCanvasManager : MonoBehaviour
     {
         GameManager.Instance.GameReset();
         GameManager.Instance.IsGameClear = false;
+        TitleManager.Instance.ChangeTitleBGM();
         SceneManager.LoadScene("TitleScene");
     }
 }
