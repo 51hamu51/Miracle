@@ -61,7 +61,7 @@ public class BossController : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(_lookPlayer) * Quaternion.AngleAxis(270.0f, new Vector3(0.0f, 1.0f, 0.0f));
 
 
-        if (GameManager.Instance.clearStageNum <= 2) // ボスが強い状態になる
+        if (GameManager.Instance.clearStageNum <= 2 && !_isEvolve) // ボスが強い状態になる
         {
             _currentState = BossState.Evolve;
         }
