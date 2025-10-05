@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class PlayerManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     public int playerHP;
     [SerializeField] private int playerMaxHP;
     [SerializeField] private int playerFirstHP;
+
+    public GameObject HPGauge;
 
     /// <summary>
     /// 継続ダメージを受ける間隔
@@ -91,11 +94,13 @@ public class PlayerManager : MonoBehaviour
 
         IsRed = false;
 
+        HPGaugeSet();
+
     }
 
     void Update()
     {
-
+        HPGaugeSet();
 
         if (IsRotating)
 
@@ -299,5 +304,11 @@ public class PlayerManager : MonoBehaviour
         GameManager.Instance.IsGameClear = true;
         GameManager.Instance.GameReset();
         SceneManager.LoadScene("TitleScene");
+    }
+
+    public void HPGaugeSet()
+    {
+        //ImageというコンポーネントのfillAmountを取得して操作する
+        HPGauge.GetComponent<Image>().fillAmount = (float)playerHP / playerMaxHP;
     }
 }
