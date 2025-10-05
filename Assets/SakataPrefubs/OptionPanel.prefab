@@ -253,8 +253,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9ed77bb5b14fa78459e1da11546a1a3d, type: 2}
+  m_sharedMaterial: {fileID: -190014221973351808, guid: 9ed77bb5b14fa78459e1da11546a1a3d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -650,8 +650,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Option
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9ed77bb5b14fa78459e1da11546a1a3d, type: 2}
+  m_sharedMaterial: {fileID: -190014221973351808, guid: 9ed77bb5b14fa78459e1da11546a1a3d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1269,8 +1269,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: BGM
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9ed77bb5b14fa78459e1da11546a1a3d, type: 2}
+  m_sharedMaterial: {fileID: -190014221973351808, guid: 9ed77bb5b14fa78459e1da11546a1a3d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1436,7 +1436,6 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 4b3a68559f2a32347ae7d6b9f0c882f6, type: 2}
   bgmSlider: {fileID: 8876495713657499207}
   seSlider: {fileID: 3211832141583990776}
-  audioSource: {fileID: 0}
   moveSE: {fileID: 8300000, guid: f970af1f3b1dc554e88524f64657bffe, type: 3}
   decideSE: {fileID: 8300000, guid: d493be26b7e954b4ab7c23673efc6404, type: 3}
   menuItems: []
