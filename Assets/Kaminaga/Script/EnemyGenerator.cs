@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum EnemyGeneratorState
+{
+    Easy,
+    Normal,
+    Hard,
+}
 public class EnemyGenerator : MonoBehaviour
 {
     private GameObject _enemyPrefab;
@@ -11,12 +17,16 @@ public class EnemyGenerator : MonoBehaviour
     private Vector3 _spawnArea;
     private Vector3 _spawnDirection;
     private int _spawnTimer;
-    private const int kSpawnInterval = 300;
+    private const int kEasyInterval = 300; // 難易度イージーの生成間隔
+    private const int kNormalInterval = 200; // 難易度ノーマルの生成間隔
+    private const int kHardInterval = 100; // 難易度ハードの生成間隔
     private const int kEffectMoveDuration = 100; // エフェクトが生成位置に移動する時間
     private const int kEffectStopDuration = 25; // エフェクトが止まる時間
     private int _effectStopTimer;
     private bool _isSpawning;
     private bool _isSpawnRight;
+    private EnemyGeneratorState _currentState;
+    private int _spawnInterval;
     void Start()
     {
         _enemyPrefab = (GameObject)Resources.Load("ScareEnemy");
@@ -29,16 +39,31 @@ public class EnemyGenerator : MonoBehaviour
         _effectStopTimer = 0;
         _isSpawning = false;
         _isSpawnRight = false;
+        _currentState = EnemyGeneratorState.Easy;
+        _spawnInterval = kEasyInterval;
     }
 
     void FixedUpdate()
     {
+        // 難易度に応じて生成間隔を変更
+        switch (_currentState)
+        {
+            case EnemyGeneratorState.Easy:
+                 _spawnInterval = kEasyInterval;
+                break;
+            case EnemyGeneratorState.Normal:
+                 _spawnInterval = kNormalInterval;
+                break;
+            case EnemyGeneratorState.Hard:
+                 _spawnInterval = kHardInterval;
+                break;
+        }
         if (!_isSpawning)
         {
             _spawnTimer++;
         }
 
-        if (_spawnTimer >= kSpawnInterval)
+        if (_spawnTimer >= _spawnInterval)
         {
             SetSpawnPoint();
             _isSpawning = true;
