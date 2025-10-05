@@ -180,7 +180,9 @@ public class PlayerManager : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(direction);
                 IsRotating2 = false;
                 IsEating = true; // 回転終わったら移動開始
-                lastEatSE.Play();
+                if (lastEatSE != null) {
+                    lastEatSE.Play();
+                }
             }
         }
 
@@ -219,7 +221,9 @@ public class PlayerManager : MonoBehaviour
         if (playerHP <= 0)
         {
             IsDead = true;
-            deadSE.Play();
+            if (deadSE != null) {
+                deadSE.Play();
+            }
             resultCanvasManager.Dead();
         }
 
@@ -252,7 +256,9 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             IsDrain = true;
-            hitSE.Play();
+            if (hitSE != null) {
+                hitSE.Play();
+            }
             Debug.Log("hitSE再生");
             bossController = collision.gameObject.GetComponent<BossController>();
             enemyController = collision.gameObject.GetComponent<EnemyController>();
@@ -284,7 +290,9 @@ public class PlayerManager : MonoBehaviour
             playerHP = Mathf.Min(playerHP + amount, playerMaxHP);
             enemyController.EnemyDead();
         }
-        eatSE.Play();
+        if (eatSE != null) {
+            eatSE.Play();
+        }
         Debug.Log("eatSE再生");
         Debug.Log("回復！HP: " + playerHP);
         IsDrain = false;
@@ -302,8 +310,9 @@ public class PlayerManager : MonoBehaviour
     public void Eat()
     {
         IsRotating = true;
-
-        gameEndSE.Play();
+        if (gameEndSE != null) {
+            gameEndSE.Play();
+        }
 
         TitleManager.Instance.StopGameBGM();
         // ↓これは使えない、分からん
