@@ -191,7 +191,7 @@ public class EnemyGenerator : MonoBehaviour
 
     void Stage2Start()
     {
-        Instantiate(_hopperPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+        Instantiate(_elephantPrefab, new Vector3(0.0f, 0.5f, 0.0f), Quaternion.identity);
         Instantiate(_cowPrefab, new Vector3(0.0f, 0.5f, 0.0f), Quaternion.identity);
         Instantiate(_cowPrefab, new Vector3(2.0f, 0.5f, 2.0f), Quaternion.identity);
         Instantiate(_cowPrefab, new Vector3(-2.0f, 0.5f, 2.0f), Quaternion.identity);
@@ -199,7 +199,7 @@ public class EnemyGenerator : MonoBehaviour
 
     void Stage3Start()
     {
-        Instantiate(_hopperPrefab, new Vector3(0.0f, 1.0f, 0.0f), Quaternion.identity);
+        Instantiate(_elephantPrefab, new Vector3(0.0f, 1.0f, 0.0f), Quaternion.identity);
         Instantiate(_elephantPrefab, new Vector3(-2.0f, 1.0f, 0.0f), Quaternion.identity);
         Instantiate(_elephantPrefab, new Vector3(-2.0f, 1.0f, 2.0f), Quaternion.identity);
         Instantiate(_elephantPrefab, new Vector3(2.0f, 1.0f, 2.0f), Quaternion.identity);
