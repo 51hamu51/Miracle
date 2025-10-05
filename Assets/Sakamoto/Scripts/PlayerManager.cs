@@ -180,7 +180,8 @@ public class PlayerManager : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(direction);
                 IsRotating2 = false;
                 IsEating = true; // 回転終わったら移動開始
-                if (lastEatSE != null) {
+                if (lastEatSE != null)
+                {
                     lastEatSE.Play();
                 }
             }
@@ -221,7 +222,8 @@ public class PlayerManager : MonoBehaviour
         if (playerHP <= 0)
         {
             IsDead = true;
-            if (deadSE != null) {
+            if (deadSE != null)
+            {
                 deadSE.Play();
             }
             resultCanvasManager.Dead();
@@ -256,7 +258,8 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             IsDrain = true;
-            if (hitSE != null) {
+            if (hitSE != null)
+            {
                 hitSE.Play();
             }
             Debug.Log("hitSE再生");
@@ -290,10 +293,11 @@ public class PlayerManager : MonoBehaviour
             playerHP = Mathf.Min(playerHP + amount, playerMaxHP);
             enemyController.EnemyDead();
         }
-        if (eatSE != null) {
+        if (eatSE != null)
+        {
             eatSE.Play();
+            Debug.Log("eatSE再生");
         }
-        Debug.Log("eatSE再生");
         Debug.Log("回復！HP: " + playerHP);
         IsDrain = false;
         drainTimer = 0;
@@ -310,7 +314,8 @@ public class PlayerManager : MonoBehaviour
     public void Eat()
     {
         IsRotating = true;
-        if (gameEndSE != null) {
+        if (gameEndSE != null)
+        {
             gameEndSE.Play();
         }
 
