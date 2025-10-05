@@ -33,7 +33,7 @@ public class BossController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _player = GameObject.Find("Player");
+        _player = GameObject.FindWithTag("Player");
         //_myMaterial = GetComponent<Renderer>().material;
         _playerDistance = Vector3.zero;
         _moveDirection = Vector3.zero;

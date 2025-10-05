@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    [SerializeField] Transform playerTransform;
+    private Transform playerTransform;
 
-    public PlayerManager playerManager;
+    private PlayerManager playerManager;
     void Start()
     {
-
+        playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        playerManager = GameObject.FindWithTag("Player").GetComponent<PlayerManager>();
     }
     void Update()
     {
