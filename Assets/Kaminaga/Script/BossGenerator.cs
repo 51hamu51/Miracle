@@ -9,7 +9,9 @@ public enum BossGeneratorState
 
 public class BossGenerator : MonoBehaviour
 {
-    private GameObject _bossPrefab;
+    private GameObject _hopperPrefab;
+    private GameObject _cowPrefab;
+    private GameObject _elephantPrefab;
     [SerializeField] private GameObject _spawnPosition; // 生成位置の座標取得用
     private GameObject _spawnEffect; // 生成位置を追うエフェクト用
     private Vector3 _spawnArea;
@@ -28,7 +30,9 @@ public class BossGenerator : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _bossPrefab = (GameObject)Resources.Load("BossEnemy");
+        _hopperPrefab = (GameObject)Resources.Load("Boss_Hopper");
+        _cowPrefab = (GameObject)Resources.Load("Boss_Cow");
+        _elephantPrefab = (GameObject)Resources.Load("Boss_Elephant");
         _spawnEffect = GameObject.Find("SpawnEffectBoss");
         _spawnArea = Vector3.zero;
         _spawnDirection = Vector3.zero;
@@ -44,6 +48,24 @@ public class BossGenerator : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        switch (GameManager.Instance.clearStageNum)
+        {
+            case 0:
+                _currentState = BossGeneratorState.Easy;
+                break;
+            case 1:
+                _currentState = BossGeneratorState.Normal;
+                break;
+            case 2:
+                _currentState = BossGeneratorState.Hard;
+                break;
+            case 3:
+                _currentState = BossGeneratorState.Hard;
+                break;
+            default:
+                _currentState = BossGeneratorState.Hard;
+                break;
+        }
         // 難易度に応じて生成間隔を変更
         switch (_currentState)
         {
@@ -64,7 +86,7 @@ public class BossGenerator : MonoBehaviour
         if (_spawnTimer >= _spawnInterval)
         {
             _isSpawning = true;
-            _spawnArea = _spawnPosition.transform.position + new Vector3(0.0f,0.0f,Random.Range(-2.0f,-5.0f));
+            _spawnArea = _spawnPosition.transform.position + new Vector3(0.0f, 0.0f, Random.Range(-2.0f, -5.0f));
             _spawnTimer = 0;
         }
         // 生成の位置までの方向を取得
@@ -84,7 +106,19 @@ public class BossGenerator : MonoBehaviour
             _effectStopTimer++;
             if (_effectStopTimer >= _effectStopDuration)
             {
-                Instantiate(_bossPrefab, _spawnArea, Quaternion.identity);
+                // 難易度に応じて生成する敵を変更
+                if (GameManager.Instance.clearStageNum == 0)
+                {
+                    Instantiate(_hopperPrefab, _spawnArea, Quaternion.identity);
+                }
+                else if (GameManager.Instance.clearStageNum == 1)
+                {
+                    Instantiate(_cowPrefab, _spawnArea, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(_elephantPrefab, _spawnArea, Quaternion.identity);
+                }
                 _isSpawning = false;
                 _effectStopTimer = 0;
             }

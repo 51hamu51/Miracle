@@ -8,8 +8,11 @@ public enum EnemyGeneratorState
 }
 public class EnemyGenerator : MonoBehaviour
 {
-    private GameObject _enemyPrefab;
+    private GameObject _hopperPrefab;
+    private GameObject _cowPrefab;
+    private GameObject _elephantPrefab;
     private GameObject _player;
+    private GameManager _gameManager;
     [SerializeField] private GameObject _spawnPositionLef; // 生成位置の座標取得用
     [SerializeField] private GameObject _spawnPositionRig; // 生成位置の座標取得用    
     private GameObject _spawnEffect; // 生成位置を追うエフェクト用
@@ -29,7 +32,9 @@ public class EnemyGenerator : MonoBehaviour
     private int _spawnInterval;
     void Start()
     {
-        _enemyPrefab = (GameObject)Resources.Load("ScareEnemy");
+        _hopperPrefab = (GameObject)Resources.Load("Enemy_Hopper");
+        _cowPrefab = (GameObject)Resources.Load("Enemy_Cow");
+        _elephantPrefab = (GameObject)Resources.Load("Enemy_Elephant");
         _player = GameObject.Find("Player");
         _spawnEffect = GameObject.Find("SpawnEffect");
         _spawnPositionCenter = _spawnPositionLef.transform.position;
@@ -99,7 +104,7 @@ public class EnemyGenerator : MonoBehaviour
             if(_effectStopTimer > kEffectStopDuration) // エフェクトが止まってから少し待つ
             {
                 _effectStopTimer = 0;
-                Instantiate(_enemyPrefab, _spawnArea, Quaternion.identity);
+                Instantiate(_hopperPrefab, _spawnArea, Quaternion.identity);
                 _isSpawning = false;
             }
         }
