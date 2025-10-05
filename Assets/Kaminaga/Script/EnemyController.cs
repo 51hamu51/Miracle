@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _player = GameObject.Find("Player");
+        _player = GameObject.FindWithTag("Player");
         _playerDistance = Vector3.zero;
         _lookPlayer = Vector3.zero;
         _moveDirection = Vector3.zero;
@@ -30,11 +30,11 @@ public class EnemyController : MonoBehaviour
         Debug.Log(_moveDirection);
         _playerDistance = _player.transform.position - transform.position;
 
-        if (_playerDistance.magnitude < _scareDistance) // ƒvƒŒƒCƒ„[‚Ì‹——£‚ªˆê’èˆÈ‰º‚È‚ç“¦‚°‚é
+        if (_playerDistance.magnitude < _scareDistance) // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì‹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‰ï¿½ï¿½È‚ç“¦ï¿½ï¿½ï¿½ï¿½
         {
             _isScared = true;
         }
-        else if (_playerDistance.magnitude > _scareCancelDistance) // ƒvƒŒƒCƒ„[‚Ì‹——£‚ªˆê’èˆÈã‚È‚ç“¦‚°‚é‚Ì‚ğ‚â‚ß‚é
+        else if (_playerDistance.magnitude > _scareCancelDistance) // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì‹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Èï¿½È‚ç“¦ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ß‚ï¿½
         {
             _isScared = false;
         }
