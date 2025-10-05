@@ -24,8 +24,10 @@ public class TitleManager : MonoBehaviour
     public AudioClip moveSE;
     // �y�ǉ��z����SE
     public AudioClip decideSE;
+    public AudioClip antiDecideSE;
 
     public Button[] menuButtons;                    // ���j���[�{�^�����i�[����z��
+    public Button secletButton;
     public Image cursorImage;                       // �J�[�\���摜�iImage�R���|�[�l���g�j
     public float cursorOffset = 50f;                // �J�[�\���ƃ{�^���̊Ԃ̃I�t�Z�b�g�i�����j
     private int currentSelectedButtonIndex = 0;     // ���ݑI�𒆂̃{�^���̃C���f�b�N�X
@@ -130,6 +132,13 @@ public class TitleManager : MonoBehaviour
 
         // �܂��S�Ẵ{�^���̃n�C���C�g�������i�O�̂��߁j
         // EventSystem.current.SetSelectedGameObject(null);
+
+        if (menuButtons[index] == secletButton)
+        {
+            //音を鳴らす
+            PlaySound(antiDecideSE);
+        }
+
 
         // �w�肳�ꂽ�{�^����I����Ԃɂ���
         EventSystem.current.SetSelectedGameObject(menuButtons[index].gameObject);
