@@ -11,9 +11,9 @@ public class EnemyGenerator : MonoBehaviour
     private Vector3 _spawnArea;
     private Vector3 _spawnDirection;
     private int _spawnTimer;
-    private const int _spawnInterval = 300;
-    private const int _effectMoveDuration = 100; // エフェクトが生成位置に移動する時間
-    private const int _effectStopDuration = 25; // エフェクトが止まる時間
+    private const int kSpawnInterval = 300;
+    private const int kEffectMoveDuration = 100; // エフェクトが生成位置に移動する時間
+    private const int kEffectStopDuration = 25; // エフェクトが止まる時間
     private int _effectStopTimer;
     private bool _isSpawning;
     private bool _isSpawnRight;
@@ -38,7 +38,7 @@ public class EnemyGenerator : MonoBehaviour
             _spawnTimer++;
         }
 
-        if (_spawnTimer >= _spawnInterval)
+        if (_spawnTimer >= kSpawnInterval)
         {
             SetSpawnPoint();
             _isSpawning = true;
@@ -55,10 +55,9 @@ public class EnemyGenerator : MonoBehaviour
 
         
         // 生成の位置までの方向を取得
-        _spawnDirection = (_spawnArea - _spawnPositionCenter) / _effectMoveDuration;
+        _spawnDirection = (_spawnArea - _spawnPositionCenter) / kEffectMoveDuration;
         if(_isSpawning)
         {
-            Debug.DrawRay(_spawnPositionCenter, (_spawnArea - _spawnPositionCenter), Color.red);
             _spawnEffect.transform.position += _spawnDirection;
         }
         else
@@ -72,7 +71,7 @@ public class EnemyGenerator : MonoBehaviour
         {
             _spawnEffect.transform.position = _spawnArea; // 誤差をなくすために直接代入
             _effectStopTimer++;
-            if(_effectStopTimer > _effectStopDuration) // エフェクトが止まってから少し待つ
+            if(_effectStopTimer > kEffectStopDuration) // エフェクトが止まってから少し待つ
             {
                 _effectStopTimer = 0;
                 Instantiate(_enemyPrefab, _spawnArea, Quaternion.identity);

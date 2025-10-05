@@ -28,6 +28,7 @@ public class BossController : MonoBehaviour
     private int _maxAttackCount;
     private int _attackDuration;
     private int _rushDuration;
+    private int _rushStopDuration;
     private int _waitDuration;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,6 +48,7 @@ public class BossController : MonoBehaviour
         _maxAttackCount = 3;
         _attackDuration = 40;
         _rushDuration = 120;
+        _rushStopDuration = 150;
         _waitDuration = 100;
     }
 
@@ -57,7 +59,6 @@ public class BossController : MonoBehaviour
         _lookPlayer = _playerDistance.normalized;
         _lookPlayer.y = 0.0f;
         transform.rotation = Quaternion.LookRotation(_lookPlayer);
-        Debug.Log("�������Ă���G�̏��:" + _currentState.ToString());
 
 
         if (Input.GetKeyDown(KeyCode.K)) // ボスが強い状態になる
@@ -79,7 +80,6 @@ public class BossController : MonoBehaviour
                 {
                     _isAttack = true;
                     _loopTimer = 0;
-                    Debug.Log("�U��!");
                     if (_attackCounter == _maxAttackCount)
                     {
                         _currentState = BossState.Rush;
@@ -117,8 +117,11 @@ public class BossController : MonoBehaviour
                 }
                 if (_rushTimer >= _rushDuration)
                 {
-                    _rushTimer = 0;
                     _moveSpeed = 0.01f;
+                }
+                if(_rushTimer >= _rushStopDuration)
+                {
+                    _rushTimer = 0;
                     _currentState = BossState.Move;
                 }
                 break;
