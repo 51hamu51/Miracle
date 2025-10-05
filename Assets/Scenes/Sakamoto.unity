@@ -5659,7 +5659,7 @@ MonoBehaviour:
   playerFirstHP: 25
   HPGauge: {fileID: 343374140}
   damageInterval: 1
-  recoverAmount: 100
+  recoverAmount: 10
   drainTime: 0.2
   resultCanvasManager: {fileID: 438503951}
   IsDead: 0
@@ -6082,7 +6082,7 @@ MonoBehaviour:
   playerFirstHP: 25
   HPGauge: {fileID: 343374140}
   damageInterval: 1
-  recoverAmount: 100
+  recoverAmount: 10
   drainTime: 0.2
   resultCanvasManager: {fileID: 438503951}
   IsDead: 0
@@ -18684,7 +18684,7 @@ MonoBehaviour:
   playerFirstHP: 25
   HPGauge: {fileID: 343374140}
   damageInterval: 1
-  recoverAmount: 100
+  recoverAmount: 10
   drainTime: 0.2
   resultCanvasManager: {fileID: 438503951}
   IsDead: 0
