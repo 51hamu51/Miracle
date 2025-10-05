@@ -1436,8 +1436,8 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 4b3a68559f2a32347ae7d6b9f0c882f6, type: 2}
   bgmSlider: {fileID: 8876495713657499207}
   seSlider: {fileID: 3211832141583990776}
-  moveSE: {fileID: 8300000, guid: f970af1f3b1dc554e88524f64657bffe, type: 3}
-  decideSE: {fileID: 8300000, guid: d493be26b7e954b4ab7c23673efc6404, type: 3}
+  moveSE: {fileID: 8300000, guid: 799dbea417d48504d92582aed9704aef, type: 3}
+  decideSE: {fileID: 8300000, guid: d75283ae9f8eae04da828475d8718c60, type: 3}
   menuItems: []
   cursorImage: {fileID: 8098799544065131785}
   cursorOffset: 50
