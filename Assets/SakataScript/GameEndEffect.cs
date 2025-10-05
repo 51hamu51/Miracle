@@ -23,9 +23,9 @@ public class GameEndEffect : MonoBehaviour
         // 透過率を0にする
         // C#のstructのプロパティを直接変更する場合、img.color のコピーを操作してしまうため、
         // 一度 color を取得し、値を変更してから、img.color に戻す必要があります。
-        Color color = imgBack.color;
-        color.a = 0f;
-        imgBack.color = color;
+        //Color color = imgBack.color;
+        //color.a = 0f;
+        //imgBack.color = color;
 
         // 終了画像の目標スケールの設定
         targetScale = imgEnd.rectTransform.localScale;
@@ -71,7 +71,7 @@ public class GameEndEffect : MonoBehaviour
         Debug.Log("フェード開始");
 
         // 処理開始
-        StartCoroutine(FadeInAndScaleUpSequence());
+       // StartCoroutine(FadeInAndScaleUpSequence());
     }
 
     // 透過率変化から拡大を順番に行うコルーチン

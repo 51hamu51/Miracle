@@ -196,6 +196,8 @@ public class PlayerManager : MonoBehaviour
             {
                 IsEating = false;
                 StartCoroutine(CallAfterDelay());
+                gameEnd.gameObject.SetActive(true);
+                gameEnd.StartFadeIn();
             }
         }
 
@@ -306,9 +308,6 @@ public class PlayerManager : MonoBehaviour
         gameEndSE.Play();
 
         TitleManager.Instance.StopGameBGM();
-        // ↓これは使えない、分からん
-        gameEnd.gameObject.SetActive(true);
-        gameEnd.StartFadeIn();
     }
 
     private IEnumerator CallAfterDelay()
