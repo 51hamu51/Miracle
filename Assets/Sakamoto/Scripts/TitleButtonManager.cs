@@ -2,10 +2,20 @@ using UnityEngine;
 
 public class TitleButtonManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject secretButton1;
+    public GameObject secretButton2;
     void Start()
     {
-
+        if (GameManager.Instance.IsGameClear)
+        {
+            secretButton1.SetActive(false);
+            secretButton2.SetActive(true);
+        }
+        else
+        {
+            secretButton2.SetActive(false);
+            secretButton1.SetActive(true);
+        }
     }
 
     // Update is called once per frame
