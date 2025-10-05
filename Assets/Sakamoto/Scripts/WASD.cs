@@ -43,7 +43,6 @@ public class WASD : MonoBehaviour
         
         //移動の向きなど座標関連はVector3で扱う
         _velocity = new Vector3(_input_x, 0f, _input_z);
-        Debug.LogFormat("{0}, {1}", _velocity.x, _velocity.z);
 
         //目線のためGetAxisが良い
         float x = !_useJoystick ? Input.GetAxis("Horizontal") : _joystick.Horizontal;
