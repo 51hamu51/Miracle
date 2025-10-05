@@ -156,6 +156,7 @@ MonoBehaviour:
   playerHP: 0
   playerMaxHP: 100
   playerFirstHP: 25
+  HPGauge: {fileID: 0}
   damageInterval: 1
   recoverAmount: 5
   drainTime: 0
@@ -174,6 +175,11 @@ MonoBehaviour:
   eatMoveSpeed: 0
   bossBonus: 0
   gameEnd: {fileID: 0}
+  hitSE: {fileID: 0}
+  eatSE: {fileID: 0}
+  deadSE: {fileID: 0}
+  gameEndSE: {fileID: 0}
+  lastEatSE: {fileID: 0}
   rotateSpeed: 90
 --- !u!54 &166210027
 Rigidbody:
@@ -631,7 +637,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b4dfee2c34e34f2408a20cf6d359e698, type: 2}
+  - {fileID: 2100000, guid: 7666558ac1ae1384b90ee87dcb0ca83a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -670,7 +676,7 @@ Transform:
   m_GameObject: {fileID: 691209474}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.19, y: 0.8393169, z: 1.2378714}
+  m_LocalPosition: {x: 2.79, y: 0.8393169, z: -3.18}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1430,6 +1436,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8486478167953759173, guid: 79784ae834b7f5d4f9aa0da21f5ca9eb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d1b76b52ff4be994495c98207f273271, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
