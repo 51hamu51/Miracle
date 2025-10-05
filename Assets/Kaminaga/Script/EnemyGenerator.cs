@@ -21,9 +21,9 @@ public class EnemyGenerator : MonoBehaviour
     private Vector3 _spawnDirection;
     private int _spawnTimer;
     private int _effectMoveDuration;
-    private const int kEasyInterval = 300; // ・ｽ・ｽﾕ度・ｽC・ｽ[・ｽW・ｽ[・ｽﾌ撰ｿｽ・ｽ・ｽ・ｽﾔ隔
-    private const int kNormalInterval = 200; // ・ｽ・ｽﾕ度・ｽm・ｽ[・ｽ}・ｽ・ｽ・ｽﾌ撰ｿｽ・ｽ・ｽ・ｽﾔ隔
-    private const int kHardInterval = 100; // ・ｽ・ｽﾕ度・ｽn・ｽ[・ｽh・ｽﾌ撰ｿｽ・ｽ・ｽ・ｽﾔ隔
+    private const int kEasyInterval = 200; // ・ｽ・ｽﾕ度・ｽC・ｽ[・ｽW・ｽ[・ｽﾌ撰ｿｽ・ｽ・ｽ・ｽﾔ隔
+    private const int kNormalInterval = 100; // ・ｽ・ｽﾕ度・ｽm・ｽ[・ｽ}・ｽ・ｽ・ｽﾌ撰ｿｽ・ｽ・ｽ・ｽﾔ隔
+    private const int kHardInterval = 50; // ・ｽ・ｽﾕ度・ｽn・ｽ[・ｽh・ｽﾌ撰ｿｽ・ｽ・ｽ・ｽﾔ隔
     private const int kEffectEasyMoveDuration = 100; // ・ｽG・ｽt・ｽF・ｽN・ｽg・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾊ置・ｽﾉ移難ｿｽ・ｽ・ｽ・ｽ骼橸ｿｽ・ｽ
     private const int kEffectNormalMoveDuration = 70;
     private const int kEffectHardMoveDuration = 40;
@@ -33,6 +33,9 @@ public class EnemyGenerator : MonoBehaviour
     private bool _isSpawnRight;
     private EnemyGeneratorState _currentState;
     private int _spawnInterval;
+    private bool _isStage1Started;
+    private bool _isStage2Started;
+    private bool _isStage3Started;
     void Start()
     {
         _hopperPrefab = (GameObject)Resources.Load("Enemy_Hopper");
@@ -51,6 +54,9 @@ public class EnemyGenerator : MonoBehaviour
         _isSpawnRight = false;
         _currentState = EnemyGeneratorState.Easy;
         _spawnInterval = kEasyInterval;
+        _isStage1Started = false;
+        _isStage2Started = false;
+        _isStage3Started = false;
     }
 
     void FixedUpdate()
@@ -72,14 +78,29 @@ public class EnemyGenerator : MonoBehaviour
             case EnemyGeneratorState.Easy:
                 _effectMoveDuration = kEffectEasyMoveDuration;
                 _spawnInterval = kEasyInterval;
+                if (!_isStage1Started)
+                {
+                    Stage1Start();
+                    _isStage1Started = true;
+                }
                 break;
             case EnemyGeneratorState.Normal:
                 _effectMoveDuration = kEffectNormalMoveDuration;
                 _spawnInterval = kNormalInterval;
+                if (!_isStage2Started)
+                {
+                    Stage2Start();
+                    _isStage2Started = true;
+                }
                 break;
             case EnemyGeneratorState.Hard:
                 _effectMoveDuration = kEffectHardMoveDuration;
                 _spawnInterval = kHardInterval;
+                if (!_isStage3Started)
+                {
+                    Stage3Start();
+                    _isStage3Started = true;
+                }
                 break;
         }
         if (!_isSpawning)
@@ -123,7 +144,7 @@ public class EnemyGenerator : MonoBehaviour
             if (_effectStopTimer > kEffectStopDuration) // ・ｽG・ｽt・ｽF・ｽN・ｽg・ｽ・ｽ・ｽ~・ｽﾜゑｿｽ・ｽﾄゑｿｽ・ｽ迴ｭ・ｽ・ｽ・ｽﾒゑｿｽ
             {
                 _effectStopTimer = 0;
-                if(GameManager.Instance.clearStageNum == 0)
+                if (GameManager.Instance.clearStageNum == 0)
                 {
                     Instantiate(_hopperPrefab, _spawnArea, Quaternion.identity);
                 }
@@ -161,4 +182,28 @@ public class EnemyGenerator : MonoBehaviour
         }
         _spawnEffect.transform.position = _spawnPositionCenter;
     }
+    void Stage1Start()
+    {
+        Instantiate(_hopperPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+        Instantiate(_hopperPrefab, new Vector3(2.0f, 0.0f, 2.0f), Quaternion.identity);
+        Instantiate(_hopperPrefab, new Vector3(-2.0f, 0.0f, 2.0f), Quaternion.identity);
+    }
+
+    void Stage2Start()
+    {
+        Instantiate(_hopperPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+        Instantiate(_cowPrefab, new Vector3(0.0f, 0.5f, 0.0f), Quaternion.identity);
+        Instantiate(_cowPrefab, new Vector3(2.0f, 0.5f, 2.0f), Quaternion.identity);
+        Instantiate(_cowPrefab, new Vector3(-2.0f, 0.5f, 2.0f), Quaternion.identity);
+    }
+
+    void Stage3Start()
+    {
+        Instantiate(_hopperPrefab, new Vector3(0.0f, 1.0f, 0.0f), Quaternion.identity);
+        Instantiate(_elephantPrefab, new Vector3(-2.0f, 1.0f, 0.0f), Quaternion.identity);
+        Instantiate(_elephantPrefab, new Vector3(-2.0f, 1.0f, 2.0f), Quaternion.identity);
+        Instantiate(_elephantPrefab, new Vector3(2.0f, 1.0f, 2.0f), Quaternion.identity);
+        Instantiate(_elephantPrefab, new Vector3(-2.0f, 1.0f, 2.0f), Quaternion.identity);
+    }
+
 }
