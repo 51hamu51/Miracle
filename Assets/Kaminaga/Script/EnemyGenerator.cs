@@ -10,18 +10,18 @@ public class EnemyGenerator : MonoBehaviour
 {
     private GameObject _enemyPrefab;
     private GameObject _player;
-    [SerializeField] private GameObject _spawnPositionLef; // ¶¬ˆÊ’u‚ÌÀ•Wæ“¾—p
-    [SerializeField] private GameObject _spawnPositionRig; // ¶¬ˆÊ’u‚ÌÀ•Wæ“¾—p    
-    private GameObject _spawnEffect; // ¶¬ˆÊ’u‚ğ’Ç‚¤ƒGƒtƒFƒNƒg—p
+    [SerializeField] private GameObject _spawnPositionLef; // ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½Ìï¿½ï¿½Wï¿½æ“¾ï¿½p
+    [SerializeField] private GameObject _spawnPositionRig; // ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½Ìï¿½ï¿½Wï¿½æ“¾ï¿½p    
+    private GameObject _spawnEffect; // ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½ï¿½Ç‚ï¿½ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½p
     private Vector3 _spawnPositionCenter;
     private Vector3 _spawnArea;
     private Vector3 _spawnDirection;
     private int _spawnTimer;
-    private const int kEasyInterval = 300; // “ïˆÕ“xƒC[ƒW[‚Ì¶¬ŠÔŠu
-    private const int kNormalInterval = 200; // “ïˆÕ“xƒm[ƒ}ƒ‹‚Ì¶¬ŠÔŠu
-    private const int kHardInterval = 100; // “ïˆÕ“xƒn[ƒh‚Ì¶¬ŠÔŠu
-    private const int kEffectMoveDuration = 100; // ƒGƒtƒFƒNƒg‚ª¶¬ˆÊ’u‚ÉˆÚ“®‚·‚éŠÔ
-    private const int kEffectStopDuration = 25; // ƒGƒtƒFƒNƒg‚ª~‚Ü‚éŠÔ
+    private const int kEasyInterval = 300; // ï¿½ï¿½Õ“xï¿½Cï¿½[ï¿½Wï¿½[ï¿½Ìï¿½ï¿½ï¿½ï¿½ÔŠu
+    private const int kNormalInterval = 200; // ï¿½ï¿½Õ“xï¿½mï¿½[ï¿½}ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ÔŠu
+    private const int kHardInterval = 100; // ï¿½ï¿½Õ“xï¿½nï¿½[ï¿½hï¿½Ìï¿½ï¿½ï¿½ï¿½ÔŠu
+    private const int kEffectMoveDuration = 100; // ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½ÉˆÚ“ï¿½ï¿½ï¿½ï¿½éï¿½ï¿½
+    private const int kEffectStopDuration = 25; // ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½~ï¿½Ü‚éï¿½ï¿½
     private int _effectStopTimer;
     private bool _isSpawning;
     private bool _isSpawnRight;
@@ -30,7 +30,7 @@ public class EnemyGenerator : MonoBehaviour
     void Start()
     {
         _enemyPrefab = (GameObject)Resources.Load("ScareEnemy");
-        _player = GameObject.Find("Player");
+        _player = GameObject.FindWithTag("Player");
         _spawnEffect = GameObject.Find("SpawnEffect");
         _spawnPositionCenter = _spawnPositionLef.transform.position;
         _spawnArea = Vector3.zero;
@@ -45,17 +45,17 @@ public class EnemyGenerator : MonoBehaviour
 
     void FixedUpdate()
     {
-        // “ïˆÕ“x‚É‰‚¶‚Ä¶¬ŠÔŠu‚ğ•ÏX
+        // ï¿½ï¿½Õ“xï¿½É‰ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ÔŠuï¿½ï¿½ÏX
         switch (_currentState)
         {
             case EnemyGeneratorState.Easy:
-                 _spawnInterval = kEasyInterval;
+                _spawnInterval = kEasyInterval;
                 break;
             case EnemyGeneratorState.Normal:
-                 _spawnInterval = kNormalInterval;
+                _spawnInterval = kNormalInterval;
                 break;
             case EnemyGeneratorState.Hard:
-                 _spawnInterval = kHardInterval;
+                _spawnInterval = kHardInterval;
                 break;
         }
         if (!_isSpawning)
@@ -75,28 +75,28 @@ public class EnemyGenerator : MonoBehaviour
             {
                 _spawnArea = _spawnPositionCenter + new Vector3(Random.Range(2.0f, 5.5f), 0.0f, Random.Range(-4.0f, 7.0f));
             }
-                _spawnTimer = 0;
+            _spawnTimer = 0;
         }
 
-        
-        // ¶¬‚ÌˆÊ’u‚Ü‚Å‚Ì•ûŒü‚ğæ“¾
+
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Ü‚Å‚Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
         _spawnDirection = (_spawnArea - _spawnPositionCenter) / kEffectMoveDuration;
-        if(_isSpawning)
+        if (_isSpawning)
         {
             _spawnEffect.transform.position += _spawnDirection;
         }
         else
         {
-            // ƒGƒtƒFƒNƒg‚ğ’†S‚É–ß‚·
+            // ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½ğ’†Sï¿½É–ß‚ï¿½
             _spawnEffect.transform.position = _spawnPositionCenter;
         }
 
-        // ¶¬‚ÌˆÊ’u‚Ü‚ÅƒGƒtƒFƒNƒg‚ªˆÚ“®‚µ‚½Œã‚É¶¬
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Ü‚ÅƒGï¿½tï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½
         if (_isSpawning && (_spawnArea - _spawnEffect.transform.position).magnitude < 0.1f)
         {
-            _spawnEffect.transform.position = _spawnArea; // Œë·‚ğ‚È‚­‚·‚½‚ß‚É’¼Ú‘ã“ü
+            _spawnEffect.transform.position = _spawnArea; // ï¿½ë·ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚É’ï¿½ï¿½Ú‘ï¿½ï¿½
             _effectStopTimer++;
-            if(_effectStopTimer > kEffectStopDuration) // ƒGƒtƒFƒNƒg‚ª~‚Ü‚Á‚Ä‚©‚ç­‚µ‘Ò‚Â
+            if (_effectStopTimer > kEffectStopDuration) // ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½~ï¿½Ü‚ï¿½ï¿½Ä‚ï¿½ï¿½ç­ï¿½ï¿½ï¿½Ò‚ï¿½
             {
                 _effectStopTimer = 0;
                 Instantiate(_enemyPrefab, _spawnArea, Quaternion.identity);
@@ -110,7 +110,7 @@ public class EnemyGenerator : MonoBehaviour
 
     void SetSpawnPoint()
     {
-        // ƒvƒŒƒCƒ„[‚©‚çˆê”Ô‹ß‚¢¶¬ˆÊ’u‚ğ’†S‚Éİ’è
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ô‹ß‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½ğ’†Sï¿½Éİ’ï¿½
         if ((_player.transform.position - _spawnPositionLef.transform.position).magnitude > (_player.transform.position - _spawnPositionRig.transform.position).magnitude)
         {
             _spawnPositionCenter = _spawnPositionRig.transform.position;
