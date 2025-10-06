@@ -13,6 +13,7 @@ public enum BossState
 public class BossController : MonoBehaviour
 {
     private GameObject _player;
+    private BossGenerator _bossGenerator;
     private Vector3 _playerDistance;
     private Vector3 _moveDirection;
     private Vector3 _lookPlayer;
@@ -34,6 +35,7 @@ public class BossController : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindWithTag("Player");
+        _bossGenerator = GameObject.Find("BossGenerator").GetComponent<BossGenerator>();
         //_myMaterial = GetComponent<Renderer>().material;
         _playerDistance = Vector3.zero;
         _moveDirection = Vector3.zero;
@@ -73,12 +75,19 @@ public class BossController : MonoBehaviour
                 break;
             case BossState.Move:
                 _loopTimer++;
+                _isAttack = false;
                 //_myMaterial.color = Color.green;
                 _moveDirection = _playerDistance.normalized;
-
+                if(_playerDistance.magnitude < 2.0f)
+                {
+                    _moveSpeed = 0.0f;
+                }
+                else
+                {
+                    _moveSpeed = 0.02f;
+                }
                 if (_loopTimer == _waitDuration)
                 {
-                    _isAttack = true;
                     _loopTimer = 0;
                     if (_attackCounter == _maxAttackCount)
                     {
@@ -94,9 +103,9 @@ public class BossController : MonoBehaviour
             case BossState.Attack:
                 //_myMaterial.color = Color.red;
                 _loopTimer++;
+                _isAttack = false;
                 if (_loopTimer == _attackDuration)
                 {
-                    _isAttack = false;
                     _attackCounter++;
                     _loopTimer = 0;
                     _currentState = BossState.Move;
@@ -109,9 +118,11 @@ public class BossController : MonoBehaviour
                 if (_rushTimer < _waitDuration)
                 {
                     _moveDirection = -_playerDistance.normalized;
+                    _moveSpeed = 0.03f;
                 }
                 else
                 {
+                    _isAttack = true;
                     _moveDirection = _playerDistance.normalized;
                     _moveSpeed = 0.30f;
                 }
@@ -121,7 +132,6 @@ public class BossController : MonoBehaviour
                 }
                 if(_rushTimer >= _rushStopDuration)
                 {
-                    _isAttack = false;
                     _rushTimer = 0;
                     _currentState = BossState.Move;
                 }
@@ -142,6 +152,7 @@ public class BossController : MonoBehaviour
     }
     public void BossDead()
     {
+        _bossGenerator._bossCount--;
         Destroy(gameObject);
     }
 

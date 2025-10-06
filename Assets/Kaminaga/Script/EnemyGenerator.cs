@@ -33,6 +33,7 @@ public class EnemyGenerator : MonoBehaviour
     private bool _isSpawnRight;
     private EnemyGeneratorState _currentState;
     private int _spawnInterval;
+    public int _enemyCount;
     private bool _isStage1Started;
     private bool _isStage2Started;
     private bool _isStage3Started;
@@ -54,6 +55,7 @@ public class EnemyGenerator : MonoBehaviour
         _isSpawnRight = false;
         _currentState = EnemyGeneratorState.Easy;
         _spawnInterval = kEasyInterval;
+        _enemyCount = 0;
         _isStage1Started = false;
         _isStage2Started = false;
         _isStage3Started = false;
@@ -80,6 +82,7 @@ public class EnemyGenerator : MonoBehaviour
                 _spawnInterval = kEasyInterval;
                 if (!_isStage1Started)
                 {
+                    _enemyCount = 0;
                     Stage1Start();
                     _isStage1Started = true;
                 }
@@ -89,6 +92,7 @@ public class EnemyGenerator : MonoBehaviour
                 _spawnInterval = kNormalInterval;
                 if (!_isStage2Started)
                 {
+                    _enemyCount = 0;
                     Stage2Start();
                     _isStage2Started = true;
                 }
@@ -98,6 +102,7 @@ public class EnemyGenerator : MonoBehaviour
                 _spawnInterval = kHardInterval;
                 if (!_isStage3Started)
                 {
+                    _enemyCount = 0;
                     Stage3Start();
                     _isStage3Started = true;
                 }
@@ -144,18 +149,26 @@ public class EnemyGenerator : MonoBehaviour
             if (_effectStopTimer > kEffectStopDuration) // ・ｽG・ｽt・ｽF・ｽN・ｽg・ｽ・ｽ・ｽ~・ｽﾜゑｿｽ・ｽﾄゑｿｽ・ｽ迴ｭ・ｽ・ｽ・ｽﾒゑｿｽ
             {
                 _effectStopTimer = 0;
+                if(_enemyCount >= 20)
+                {
+                    _isSpawning = false;
+                    return;
+                }
                 if (GameManager.Instance.clearStageNum == 0)
                 {
+                    _enemyCount++;
                     Instantiate(_hopperPrefab, _spawnArea, Quaternion.identity);
                 }
                 else if (GameManager.Instance.clearStageNum == 1)
                 {
                     _spawnArea.y += 0.5f;
+                    _enemyCount++;
                     Instantiate(_cowPrefab, _spawnArea, Quaternion.identity);
                 }
                 else
                 {
                     _spawnArea.y += 1.0f;
+                    _enemyCount++;
                     Instantiate(_elephantPrefab, _spawnArea, Quaternion.identity);
                 }
                 _isSpawning = false;
@@ -184,6 +197,7 @@ public class EnemyGenerator : MonoBehaviour
     }
     void Stage1Start()
     {
+        _enemyCount += 3;
         Instantiate(_hopperPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
         Instantiate(_hopperPrefab, new Vector3(2.0f, 0.0f, 2.0f), Quaternion.identity);
         Instantiate(_hopperPrefab, new Vector3(-2.0f, 0.0f, 2.0f), Quaternion.identity);
@@ -191,7 +205,8 @@ public class EnemyGenerator : MonoBehaviour
 
     void Stage2Start()
     {
-        Instantiate(_elephantPrefab, new Vector3(0.0f, 0.5f, 0.0f), Quaternion.identity);
+        _enemyCount += 4;
+        Instantiate(_cowPrefab, new Vector3(0.0f, 0.5f, 0.0f), Quaternion.identity);
         Instantiate(_cowPrefab, new Vector3(0.0f, 0.5f, 0.0f), Quaternion.identity);
         Instantiate(_cowPrefab, new Vector3(2.0f, 0.5f, 2.0f), Quaternion.identity);
         Instantiate(_cowPrefab, new Vector3(-2.0f, 0.5f, 2.0f), Quaternion.identity);
@@ -199,6 +214,7 @@ public class EnemyGenerator : MonoBehaviour
 
     void Stage3Start()
     {
+        _enemyCount += 5;
         Instantiate(_elephantPrefab, new Vector3(0.0f, 1.0f, 0.0f), Quaternion.identity);
         Instantiate(_elephantPrefab, new Vector3(-2.0f, 1.0f, 0.0f), Quaternion.identity);
         Instantiate(_elephantPrefab, new Vector3(-2.0f, 1.0f, 2.0f), Quaternion.identity);

@@ -22,6 +22,8 @@ public class BossGenerator : MonoBehaviour
     private int _effectStopDuration; // エフェクトが止まる時間
     private int _effectStopTimer;
     private bool _isSpawning;
+    private bool _isFirstSpawn;
+    public int _bossCount;
     private BossGeneratorState _currentState;
     private const int kEasyInterval = 600;
     private const int kNormalInterval = 400;
@@ -42,6 +44,8 @@ public class BossGenerator : MonoBehaviour
         _effectStopDuration = 25;
         _effectStopTimer = 0;
         _isSpawning = false;
+        _isFirstSpawn = false;
+        _bossCount = 0;
         _currentState = BossGeneratorState.Easy;
     }
 
@@ -77,6 +81,13 @@ public class BossGenerator : MonoBehaviour
                 break;
             case BossGeneratorState.Hard:
                 _spawnInterval = kHardInterval;
+                if(!_isFirstSpawn)
+                {
+                    _bossCount++;
+                    Instantiate(_elephantPrefab, new Vector3(0.0f, 1.0f, 3.0f), Quaternion.identity);
+                    _spawnTimer = _spawnInterval / 2; // 最初の生成を早める
+                    _isFirstSpawn = true;
+                }
                 break;
         }
         if (!_isSpawning)
@@ -106,17 +117,27 @@ public class BossGenerator : MonoBehaviour
             _effectStopTimer++;
             if (_effectStopTimer >= _effectStopDuration)
             {
+                if(_bossCount >= 15)
+                {
+                    // 15体生成したらそれ以上生成しない
+                    _isSpawning = false;
+                    _effectStopTimer = 0;
+                    return;
+                }
                 // 難易度に応じて生成する敵を変更
                 if (GameManager.Instance.clearStageNum == 0)
                 {
+                    _bossCount++;
                     Instantiate(_hopperPrefab, _spawnArea, Quaternion.identity);
                 }
                 else if (GameManager.Instance.clearStageNum == 1)
                 {
+                    _bossCount++;
                     Instantiate(_cowPrefab, _spawnArea, Quaternion.identity);
                 }
                 else
                 {
+                    _bossCount++;
                     Instantiate(_elephantPrefab, _spawnArea, Quaternion.identity);
                 }
                 _isSpawning = false;

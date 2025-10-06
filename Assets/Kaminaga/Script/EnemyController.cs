@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private GameObject _player;
+    private EnemyGenerator _enemyGenerator;
     private Vector3 _playerDistance;
     private Vector3 _lookPlayer;
     private Vector3 _moveDirection;
@@ -15,6 +16,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindWithTag("Player");
+        _enemyGenerator = GameObject.Find("EnemyGenerator").GetComponent<EnemyGenerator>();
         _playerDistance = Vector3.zero;
         _lookPlayer = Vector3.zero;
         _moveDirection = Vector3.zero;
@@ -53,6 +55,7 @@ public class EnemyController : MonoBehaviour
 
     public void EnemyDead()
     {
+        _enemyGenerator._enemyCount--;
         Destroy(gameObject);
     }
 
