@@ -125,7 +125,8 @@ public class OptionSystem : MonoBehaviour
         // ----------------------------------------------------
 
         // ���ݑI�𒆂̍��ڂ��擾
-        if (currentIndex == 0) {
+        if (currentIndex == 0)
+        {
             return;
         }
         Selectable currentItem = menuItems[currentIndex];
@@ -250,7 +251,7 @@ public class OptionSystem : MonoBehaviour
         if (volume <= 0.0001f) dB = -80f;
         else dB = Mathf.Log10(volume) * 20f;
         audioMixer.SetFloat(SE_VOLUME_PARAM, dB); */
-        TitleManager.Instance.SetSEVolume(bgmSlider.value);
+        TitleManager.Instance.SetSEVolume(seSlider.value);
     }
 
     public void Close()
